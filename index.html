@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda</title>
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fuentes tipográficas (Montserrat y Playfair Display) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenedor centralizado para forzar la vista móvil (Mobile-First) -->
+    <main class="mobile-container">
+        
+        <!-- SECCIÓN 1: Portada -->
+        <header class="hero scroll-anim">
+            <div class="overlay"></div>
+            <div class="hero-content">
+                <p class="subtitle">¡Nos Casamos!</p>
+                <h1 class="title">PABLO <span>&</span> GESURI</h1>
+                <div class="date-divider"></div>
+                <p class="date">26 DE DICIEMBRE, 2026</p>
+            </div>
+        </header>
+
+        <!-- SECCIÓN 2: Cuenta Regresiva -->
+        <section class="countdown-section scroll-anim">
+            <h2>Faltan</h2>
+            <div id="countdown" class="countdown-container">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <p>Días</p>
+                </div>
+                <div class="colon">:</div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <p>Hrs</p>
+                </div>
+                <div class="colon">:</div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <p>Min</p>
+                </div>
+                <div class="colon">:</div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <p>Seg</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTENEDOR GRID: Secciones 2 y 3 -->
+        <div class="event-details-wrapper scroll-anim">
+            
+            <!-- SECCIÓN 2: Ceremonia y Recepción (Columna Izquierda en PC) -->
+            <section class="ceremony-section">
+                <h2 class="section-title">Dónde & Cuándo</h2>
+                
+                <div class="location-card">
+                    <h3>Ceremonia Religiosa</h3>
+                    <p class="time">18:30 HRS</p>
+                    <p class="place">Congregacion FIladelfia</p>
+                    <p class="address">Mérida, Yucatán</p>
+                    <a href="https://maps.app.goo.gl/86gksqudFYSy2KHCA" class="btn-location">Ver Mapa</a>
+                </div>
+
+                <div class="location-card">
+                    <h3>Recepción</h3>
+                    <p class="time">20:30 HRS</p>
+                    <p class="place">Hacienda Maria Elena</p>
+                    <p class="address">Mérida, Yucatán</p>
+                    <a href="#" class="btn-location">Ver Mapa</a>
+                </div>
+            </section>
+
+            <!-- SECCIÓN 3: Itinerario (Columna Derecha en PC) -->
+            <section class="itinerary-section">
+                <h2 class="section-title">Itinerario</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">18:30 HRS</div>
+                        <div class="timeline-text">
+                            <h3>Ceremonia</h3>
+                            <p>¡Damos el sí!</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">20:30 HRS</div>
+                        <div class="timeline-text">
+                            <h3>Recepción</h3>
+                            <p>Bebidas de bienvenida</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">22:00 HRS</div>
+                        <div class="timeline-text">
+                            <h3>Banquete</h3>
+                            <p>Acompáñanos a cenar</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">23:00 HRS</div>
+                        <div class="timeline-text">
+                            <h3>¡A Bailar!</h3>
+                            <p>Inicio de la fiesta</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Enlace al archivo JS externo -->
+    <script src="js/main.js"></script>
+</body>
+</html>

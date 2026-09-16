@@ -1,0 +1,329 @@
+/* Variables Globales (Tu paleta de colores) */
+:root {
+    --verde-oscuro: #42471F;
+    --verde-oliva: #636B2F;
+    --verde-medio: #8E9943;
+    --verde-pistacho: #B3C255;
+    --verde-claro: #D9EB67;
+    --crema: #FAF9F6;
+    
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Montserrat', s    ans-serif;
+}
+/* --- PORTADA (Hero) --- */
+/* --- PORTADA (Hero) --- */
+.hero {
+    position: relative;
+    height: 80vh; /* Que ocupe toda la altura de la ventana para más elegancia */
+    min-height: 600px;
+    
+    background-image: url('../assets/portada.jpg'); 
+    background-color: var(--verde-medio);
+    background-size: cover; 
+    
+    /* EL SECRETO ESTÁ AQUÍ: 'center 20%' 
+       Esto centra la imagen horizontalmente, pero verticalmente muestra el 20% superior.
+       Si aún se cortan un poco, bájalo a 10% o 0% (top). Si hay mucho cielo, súbelo a 30%. */
+    background-position: center 20%; 
+    background-repeat: no-repeat;
+    
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5rem; /* Subimos un poco el texto para que no quede al ras */
+}
+
+
+
+/* Reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--crema);
+    font-family: var(--font-sans);
+    color: var(--verde-oscuro);
+    margin: 0;
+    min-height: 100vh;
+}
+
+.mobile-container {
+    /* Ahora ocupará todo el ancho disponible */
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--crema);
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+/* Degradado para transición suave hacia el fondo crema */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, var(--crema) 15%, transparent);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1.5rem;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.title span {
+    font-size: 2.2rem;
+    font-style: italic;
+    color: var(--verde-oliva);
+}
+
+.date-divider {
+    width: 50px;
+    height: 1px;
+    background-color: var(--verde-oscuro);
+    margin: 1.5rem auto 1rem;
+}
+
+.date {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+}
+
+/* --- CUENTA REGRESIVA --- */
+.countdown-section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.countdown-section h2 {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 55px;
+}
+
+.time-box span {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--verde-oscuro);
+}
+
+.time-box p {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+}
+
+.colon {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    color: var(--verde-medio);
+}
+
+/* --- ANIMACIONES --- */
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-anim.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+/* Seccion 2 */
+
+/* =========================================
+   SECCIONES 2 Y 3: DETALLES E ITINERARIO (MÓVIL)
+   ========================================= */
+.event-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 4rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+}
+
+/* Tarjetas de Ubicación */
+.location-card {
+    background-color: #fff;
+    border: 1px solid rgba(142, 153, 67, 0.2); /* Borde sutil verde-medio */
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.location-card h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oscuro);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.location-card .time {
+    color: var(--verde-medio);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.location-card .place, .location-card .address {
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+    margin-bottom: 0.2rem;
+}
+
+.btn-location {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.5rem;
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+}
+
+.btn-location:hover {
+    background-color: var(--verde-oscuro);
+}
+
+/* La línea de tiempo (Ajustada) */
+.timeline {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+    padding-left: 24px;
+    border-left: 1px solid var(--verde-medio);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -29.5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--crema);
+    border: 2px solid var(--verde-oliva);
+    border-radius: 50%;
+}
+
+.timeline-time {
+    font-size: 0.85rem;
+    color: var(--verde-medio);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.1em;
+}
+
+.timeline-text h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oscuro);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-text p {
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+    opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+    .hero {
+        height: 100vh; /* 100% del alto de la ventana en PC */
+        padding-bottom: 5rem; /* Subimos un poco más el texto en PC */
+    }
+
+    /* --- SECCIONES 2 Y 3 EN PC (CSS GRID) --- */
+    .event-details-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos mitades iguales */
+        gap: 6rem; /* Separación amplia entre la información y el itinerario */
+        padding: 6rem 10%;
+        align-items: start; /* Para que las columnas no se estiren forzosamente hacia abajo */
+    }
+
+    .section-title {
+        text-align: left; /* Alineamos los títulos a la izquierda en PC */
+        font-size: 3rem;
+        margin-bottom: 3.5rem;
+    }
+
+    /* Ajustes de las tarjetas para PC */
+    .location-card {
+        text-align: left;
+        padding: 2.5rem;
+    }
+
+    .timeline {
+        margin: 0; /* Quitamos el centrado de móvil */
+        max-width: 100%;
+    }
+}
+
