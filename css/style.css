@@ -294,6 +294,394 @@ body {
     opacity: 0.8;
 }
 
+
+/* =========================================
+   VENTANAS EMERGENTES (MODALES)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(30, 35, 15, 0.7); /* Fondo oscuro con tono verdoso */
+    display: flex;
+    align-items: center; justify-content: center;
+    z-index: 9999; /* Para que quede encima de TODO */
+    
+    /* Efecto de aparecer suavemente */
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--crema);
+    width: 90%; max-width: 450px;
+    border-radius: 12px; padding: 2rem 1.5rem;
+    position: relative; text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    
+    /* Efecto de deslizarse hacia arriba */
+    transform: translateY(30px); transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute; top: 5px; right: 15px;
+    font-size: 2.2rem; background: none; border: none;
+    color: var(--verde-oscuro); cursor: pointer;
+}
+
+.modal-content h3 {
+    font-family: var(--font-serif); color: var(--verde-oliva);
+    font-size: 1.6rem; margin-bottom: 1.2rem; margin-top: 0.5rem;
+}
+
+.modal-gallery img {
+    width: 100%; height: 160px; object-fit: cover;
+    border-radius: 8px; margin-bottom: 1.5rem;
+}
+
+.modal-map {
+    width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Modificador para que el botón ocupe todo el ancho */
+.btn-full { 
+    display: block; width: 100%; 
+    box-sizing: border-box; 
+}
+
+.modal-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.modal-icon svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.85; /* Lo suaviza un poco para que sea elegante */
+}
+
+
+/* =========================================
+   SECCIÓN 4: EXTRAS (PARALLAX) - MÓVIL
+   ========================================= */
+.extras-section {
+    position: relative;
+    padding: 5rem 1.5rem;
+    
+    /* EL EFECTO PARALLAX ESTÁ EN ESTAS 4 LÍNEAS */
+    background-image: url('../assets/fondo-parallax.jpg'); /* Añade una foto a tus assets */
+    background-attachment: fixed; 
+    background-position: center;
+    background-size: cover;
+}
+
+.parallax-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Ponemos tu verde oscuro con un 85% de opacidad para tapar un poco la foto */
+    background-color: rgba(66, 71, 31, 0.85); 
+    z-index: 1;
+}
+
+.extras-content {
+    position: relative;
+    z-index: 2; /* Asegura que las tarjetas queden por encima del fondo oscuro */
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Tarjetas flotantes */
+.extra-card {
+    background-color: var(--crema);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.extra-card h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.dress-code {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--verde-oscuro);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.dress-note, .gift-note {
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Círculos de color */
+.color-palette {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--crema);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Caja de datos bancarios */
+.bank-details {
+    background-color: rgba(142, 153, 67, 0.15); /* Verde medio súper clarito */
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+}
+
+.bank-details p {
+    margin-bottom: 0.4rem;
+}
+/* Botones de Mesas de Regalos */
+.registry-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-registry {
+    display: block;
+    padding: 0.8rem;
+    border: 1px solid var(--verde-oliva);
+    color: var(--verde-oliva);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por encima (Hover) */
+.btn-registry:hover {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+}
+
+/* Línea separadora con texto centrado */
+.gift-divider {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.gift-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(142, 153, 67, 0.3); /* Línea sutil */
+    z-index: 1;
+}
+
+.gift-divider span {
+    position: relative;
+    background-color: var(--crema); /* Fondo igual al de la tarjeta para cortar la línea */
+    padding: 0 1rem;
+    color: var(--verde-medio);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    z-index: 2;
+}
+/* =========================================
+   SECCIÓN 5: RSVP (FORMULARIO)
+   ========================================= */
+.rsvp-section {
+    padding: 6rem 1.5rem;
+    background-color: var(--crema);
+    display: flex;
+    justify-content: center;
+}
+
+.rsvp-container {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    border: 1px solid rgba(142, 153, 67, 0.1);
+}
+
+
+.rsvp-text {
+    font-size: 0.95rem;
+    color: var(--verde-oscuro);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.rsvp-form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: var(--crema);
+    font-family: var(--font-sans);
+    color: var(--verde-oscuro);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--verde-oliva);
+}
+
+.btn-rsvp {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    border: none;
+    padding: 1.2rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-rsvp:hover {
+    background-color: var(--verde-oscuro);
+}
+
+/* =========================================
+   FOOTER (PIE DE PÁGINA)
+   ========================================= */
+.site-footer {
+    background-color: var(--verde-oscuro);
+    color: var(--crema);
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.footer-names {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--verde-claro);
+}
+
+.footer-date {
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.footer-credits {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+/* --- BOTONES DE SELECCIÓN (RADIO BUTTONS) --- */
+.attendance-options {
+    display: flex;
+    flex-direction: column; /* Apilados en celular */
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.radio-card {
+    cursor: pointer;
+    flex: 1; /* Para que en PC ocupen la mitad cada uno */
+}
+
+/* Ocultamos el circulito feo nativo del radio button */
+.radio-card input {
+    display: none; 
+}
+
+/* Diseñamos la etiqueta como si fuera un botón */
+.radio-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid rgba(142, 153, 67, 0.3); /* Borde verde oliva sutil */
+    border-radius: 8px;
+    text-align: center;
+    color: var(--verde-oscuro);
+    background-color: var(--crema);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+/* ESTADO SELECCIONADO: Cuando el usuario hace clic */
+.radio-card input:checked + .radio-label {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    border-color: var(--verde-oliva);
+    box-shadow: 0 4px 10px rgba(142, 153, 67, 0.3);
+}
+
+/* Efecto hover suave (para PC) */
+.radio-card:hover .radio-label {
+    border-color: var(--verde-oliva);
+}
+
+
+
 @media (min-width: 768px) {
     .hero {
         height: 100vh; /* 100% del alto de la ventana en PC */
@@ -324,6 +712,38 @@ body {
     .timeline {
         margin: 0; /* Quitamos el centrado de móvil */
         max-width: 100%;
+    }
+    /* --- SECCIÓN 4 EN PC --- */
+    .extras-section {
+        padding: 8rem 10%;
+    }
+
+    .extras-content {
+        flex-direction: row; /* Coloca una tarjeta junto a la otra */
+        gap: 5rem; /* Separación amplia */
+    }
+
+    .extra-card {
+        flex: 1; /* Ambas tarjetas ocupan exactamente el mismo ancho (50%) */
+        padding: 4rem 3rem;
+    }
+    /* --- SECCIÓN 5: RSVP EN PC --- */
+    .rsvp-container {
+        flex-direction: row; /* Coloca la imagen a la izquierda y el form a la derecha */
+        align-items: stretch; /* Hace que la foto y el form tengan la misma altura */
+    }
+
+    .rsvp-image {
+        width: 45%; /* La foto ocupa casi la mitad de la tarjeta */
+        height: auto; /* Se ajusta automáticamente a la altura del formulario */
+    }
+
+    .rsvp-content {
+        width: 55%; /* El formulario ocupa el resto */
+        padding: 4rem; /* Más espacio interior para que respire en PC */
+    }
+    .attendance-options {
+        flex-direction: row; /* Uno al lado del otro en PC */
     }
 }
 

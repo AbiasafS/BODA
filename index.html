@@ -58,19 +58,41 @@
                 <h2 class="section-title">Dónde & Cuándo</h2>
                 
                 <div class="location-card">
+                    <div class="modal-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--verde-oliva)" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Cruz -->
+                    <path d="M12 2v3 M10.5 3.5h3" /> 
+                    <!-- Edificio principal -->
+                    <path d="M12 5l-4 5v12h8V10z" /> 
+                    <!-- Techos laterales -->
+                    <path d="M8 12l-4 4v6h4 M16 12l4 4v6h-4" /> 
+                    <!-- Puerta -->
+                    <path d="M13.5 22v-4a1.5 1.5 0 0 0-3 0v4" /> 
+                    <!-- Ventanal central y laterales -->
+                    <circle cx="12" cy="12" r="1.5" /> 
+                    <path d="M6 18v2 M18 18v2" /> 
+                </svg>
+            </div>
                     <h3>Ceremonia Religiosa</h3>
                     <p class="time">18:30 HRS</p>
                     <p class="place">Congregacion FIladelfia</p>
-                    <p class="address">Mérida, Yucatán</p>
-                    <a href="https://maps.app.goo.gl/86gksqudFYSy2KHCA" class="btn-location">Ver Mapa</a>
-                </div>
+                    <p class="address">Ticul Yucatán</p>
+                    <button onclick="openModal('modal-ceremonia')" class="btn-location">Ver Mapa</button>               
+                 </div>
 
                 <div class="location-card">
+                    <!-- Icono de Recepción (Copas Clásicas) -->
+            <div class="modal-icon">
+                <!-- Icono de Recepción (Copas Brindando) -->
+            <div class="modal-icon">
+                <img src="assets/Shape.svg" alt="Icono Recepción" style="width: 60px; height: 60px;">
+            </div>
+            </div>
                     <h3>Recepción</h3>
                     <p class="time">20:30 HRS</p>
                     <p class="place">Hacienda Maria Elena</p>
-                    <p class="address">Mérida, Yucatán</p>
-                    <a href="#" class="btn-location">Ver Mapa</a>
+                    <p class="address">Ticul Yucatán</p>
+                    <button onclick="openModal('modal-recepcion')" class="btn-location">Ver Mapa</button>
                 </div>
             </section>
 
@@ -121,7 +143,182 @@
 
     </main>
 
+    <!-- SECCIÓN 4: Dress Code & Regalos (Efecto Parallax) -->
+        <section class="extras-section scroll-anim">
+            <!-- Capa oscura para que el texto resalte sobre la foto -->
+            <div class="parallax-overlay"></div>
+            
+            <div class="extras-content">
+                
+                <!-- Tarjeta 1: Código de Vestimenta -->
+                <div class="extra-card">
+                    <h3>Código de Vestimenta</h3>
+                    <p class="dress-code">Formal / Etiqueta</p>
+                    <p class="dress-note">Nos encantaría verte lucir espectacular. Por favor, te pedimos amablemente reservar el color blanco exclusivo para la novia.</p>
+                    
+                    <!-- Paleta de colores sugerida (Opcional) -->
+                    <div class="color-palette">
+                        <div class="color-circle" style="background-color: #2c3e50;"></div>
+                        <div class="color-circle" style="background-color: #8E9943;"></div>
+                        <div class="color-circle" style="background-color: #bdc3c7;"></div>
+                        <div class="color-circle" style="background-color: #000000;"></div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Mesa de Regalos / Lluvia de Sobres -->
+                
+                    <!-- Tarjeta 2: Mesas de Regalos y Aportaciones -->
+                <div class="extra-card">
+                    <h3>Sugerencia de Regalo</h3>
+                    <p class="gift-note">Su presencia es nuestro mayor regalo. Si desean tener un detalle adicional, pueden hacerlo a través de nuestras mesas de regalos o apoyarnos con nuestra luna de miel.</p>
+                    
+                    <!-- Botones de Mesas de Regalos -->
+                    <div class="registry-buttons">
+                        <!-- Enlace a Amazon -->
+                        <a href="#" target="_blank" class="btn-registry">
+                            Mesa en Amazon
+                        </a>
+                        <!-- Enlace a Tienda Departamental (Ej. Liverpool) -->
+                        <a href="#" target="_blank" class="btn-registry">
+                            Liverpool (Evento: 123456)
+                        </a>
+                    </div>
+                    
+                    <!-- Línea separadora estética -->
+                    <div class="gift-divider">
+                        <span>O transferencias</span>
+                    </div>
+                    
+                    <!-- Datos Bancarios -->
+                    <div class="bank-details">
+                        <p><strong>Banco:</strong> BBVA</p>
+                        <p><strong>Cuenta:</strong> 1234 5678 9012</p>
+                        <p><strong>CLABE:</strong> 012 3456 7890 1234 567</p>
+                        <p><strong>Titular:</strong> Pablo o Gesuri</p>
+                    </div>
+                    
+                    <!-- Código QR (Opcional) -->
+                    <!-- <div class="qr-code"> -->
+                        <!-- Si no usas QR, puedes borrar este div de "qr-code" -->
+                        <!-- <img src="assets/qr-placeholder.png" alt="Código QR" style="width: 140px; border-radius: 8px; margin-top: 15px;"> -->
+                    <!-- </div> -->
+                </div>
+                </div>
+
+            
+        </section>
+
+        <!-- SECCIÓN 5: Confirmación de Asistencia (RSVP) -->
+        <section class="rsvp-section scroll-anim">
+            <div class="rsvp-container">
+                <h2 class="section-title">Confirmación de Asistencia</h2>
+                <p class="rsvp-text">Esperamos contar con tu presencia para compartir este día tan especial. Por favor, ayúdanos confirmando tu asistencia antes del 10 de Noviembre.</p>
+
+                <!-- Imagen decorativa para el formulario -->
+                <div class="rsvp-image"></div>
+
+                <!-- El formulario -->
+                <form id="rsvp-form" class="rsvp-form">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo (o Familia)</label>
+                        <input type="text" id="nombre" placeholder="Ej. Familia López" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>¿Asistirás?</label>
+                        <div class="attendance-options">
+                            <!-- Opción SÍ -->
+                            <label class="radio-card">
+                                <input type="radio" name="asistencia" value="Sí, ahí estaremos con gusto" required>
+                                <span class="radio-label">¡Sí, asistiré!</span>
+                            </label>
+                            
+                            <!-- Opción NO -->
+                            <label class="radio-card">
+                                <input type="radio" name="asistencia" value="Lamentablemente no podré asistir">
+                                <span class="radio-label">No podré asistir</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje para los novios (Opcional)</label>
+                        <textarea id="mensaje" rows="3" placeholder="Déjanos tus buenos deseos..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-rsvp">Confirmar por WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA (Footer) -->
+        <footer class="site-footer">
+            <p class="footer-names">Pablo & Gesuri</p>
+            <p class="footer-date">26 . 12 . 2026</p>
+            <p class="footer-credits">Hecho con ♥ para nuestro gran día</p>
+        </footer>
+
+
+    
+
     <!-- Enlace al archivo JS externo -->
     <script src="js/main.js"></script>
+
+
+<!-- =========================================
+         VENTANAS EMERGENTES (MODALES) DE MAPAS
+         ========================================= -->
+         
+    <!-- Modal Ceremonia -->
+    <div id="modal-ceremonia" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-ceremonia')">&times;</button>
+            <h3>Congregación Filadelfia</h3>
+            
+            <!-- Foto del lugar (Opcional, pon una foto en la carpeta assets) -->
+            <div class="modal-gallery">
+                <!-- Icono de Ceremonia (Anillos) -->
+            <!-- Icono de Ceremonia (Capilla Ilustrativa) -->
+            
+            </div>
+
+            <!-- Mapa embebido de Google Maps -->
+            <div class="modal-map">
+                <!-- Aquí pegaremos el iframe que te da Google Maps -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d662.8863221148767!2d-89.54682754454295!3d20.39738739275865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f56527447c74771%3A0x954568834b2a6ce5!2sIglesia%20Presbiteriana%20Filadelfia!5e0!3m2!1ses-419!2smx!4v1789536966846!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>            </div>
+
+            <!-- Botón final para ir a la App -->
+            <a href="https://maps.app.goo.gl/dJfPPRzwSz5ABGCd9" target="_blank" class="btn-location btn-full">Abrir en Google Maps</a>
+        </div>
+    </div>
+
+    <!-- Modal Recepción -->
+    <div id="modal-recepcion" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('modal-recepcion')">&times;</button>
+            <h3>Hacienda Maria Elena</h3>
+            
+            <div class="modal-gallery">
+                
+            </div>
+
+            <div class="modal-map">
+                <!-- Mapa genérico temporal -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4047.4520202328854!2d-89.54685059494635!3d20.38481011345792!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f56527f2aef63f5%3A0x6a9426012a2d667b!2sHacienda%20Mar%C3%ADa%20Elena%20Yucat%C3%A1n!5e0!3m2!1ses-419!2smx!4v1789537462991!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>            </div>
+
+            <a href="https://maps.app.goo.gl/E2SwqpYuhBS12Yvf9" target="_blank" class="btn-location btn-full">Abrir en Google Maps</a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

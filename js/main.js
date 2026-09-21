@@ -52,4 +52,49 @@ const scrollObserver = new IntersectionObserver((entries, observer) => {
 
 animatedElements.forEach(el => {
     scrollObserver.observe(el);
-});     
+});  
+
+
+
+// --- 3. FUNCIONES PARA LOS MODALES DE MAPAS ---
+
+function openModal(modalId) {
+    document.getElementById(modalId).classList.add('active');
+    // Esto evita que el usuario pueda hacer scroll en la página de fondo
+    document.body.style.overflow = 'hidden'; 
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.remove('active');
+    // Esto restaura el scroll normal
+    document.body.style.overflow = 'auto'; 
+}
+
+// --- 4. LÓGICA DEL FORMULARIO RSVP A WHATSAPP ---
+document.getElementById('rsvp-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita que la página se recargue
+
+    // 1. Obtener los valores de los campos
+    const nombre = document.getElementById('nombre').value.trim();
+    const asistencia = document.querySelector('input[name="asistencia"]:checked').value;
+    const mensaje = document.getElementById('mensaje').value.trim();
+
+    // 2. Tu número de teléfono (Debe incluir el código de país, ej. 52 para México)
+    const telefono = "529999584946"; // <-- CAMBIA ESTO POR EL NÚMERO REAL
+
+    // 3. Armar el mensaje para WhatsApp
+    let textoWhatsApp = `¡Hola! Vengo a confirmar mi asistencia a la boda. 💍\n\n`;
+    textoWhatsApp += `*Nombre:* ${nombre}\n`;
+    textoWhatsApp += `*Asistencia:* ${asistencia}\n`;
+    
+    if (mensaje !== "") {
+        textoWhatsApp += `*Mensaje:* "${mensaje}"\n`;
+    }
+
+    // 4. Codificar el texto para que las URLs lo entiendan (espacios, saltos de línea)
+    const textoCodificado = encodeURIComponent(textoWhatsApp);
+
+    // 5. Crear el enlace y redirigir
+    const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
+    window.open(url, '_blank');
+});
