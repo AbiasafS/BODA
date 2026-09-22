@@ -174,13 +174,12 @@
         </div>
 
     </main>
-
-    <!-- SECCIÓN DE GALERÍA DE FOTOS -->
+<!-- SECCIÓN DE GALERÍA DE FOTOS -->
         <section class="gallery-section scroll-anim">
             <h2 class="section-title">Nuestros Momentos</h2>
             
+            <!-- CUADRÍCULA PRINCIPAL (Siempre visible) -->
             <div class="gallery-grid">
-                <!-- FOTOS PRINCIPALES (Siempre visibles) -->
                 <div class="gallery-item item-tall">
                     <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8950_resized.jpg" alt="Sesión 1">
                 </div>
@@ -199,30 +198,33 @@
                 <div class="gallery-item">
                     <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8722_resized.jpg" alt="Sesión 6">
                 </div>
-                
-                
-                
+            </div>
 
-                <!-- FOTOS EXTRAS (Ocultas al inicio) -->
-                <div class="gallery-item foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg" alt="Sesión 6">
+            <!-- CONTENEDOR EFECTO ACORDEÓN (FOTOS EXTRAS) -->
+            <div id="wrapper-extra" class="wrapper-colapsable">
+                <div class="wrapper-inner">
+                    <!-- Segunda cuadrícula que se oculta/muestra -->
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg" alt="Sesión extra 1">
+                        </div>
+                        <div class="gallery-item item-tall">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg" alt="Sesión extra 2">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg" alt="Sesión extra 3">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg" alt="Sesión extra 4">
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg" alt="Sesión extra 5">
+                        </div>
+                        <div class="gallery-item item-wide">
+                            <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg" alt="Sesión extra 6">
+                        </div>
+                    </div>
                 </div>
-                <div class="gallery-item item-tall foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg" alt="Sesión 7">
-                </div>
-                <div class="gallery-item foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg" alt="Sesión 8">
-                </div>
-                <!-- Puedes seguir agregando las que quieras con la clase "foto-extra hidden" -->
-                 <div class="gallery-item foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg" alt="Sesión 8">
-                </div><div class="gallery-item foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg" alt="Sesión 8">
-                </div>
-                <div class="gallery-item item-wide foto-extra hidden">
-                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg" alt="Sesión 4">
-                </div>
-
             </div>
 
             <!-- Botón para expandir -->
@@ -230,7 +232,6 @@
                 <button id="btn-ver-mas" class="btn-location">Ver más fotos</button>
             </div>
         </section>
-
 
     <!-- SECCIÓN 4: Dress Code & Regalos (Efecto Parallax) -->
         <section class="extras-section scroll-anim">

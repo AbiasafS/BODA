@@ -727,10 +727,55 @@ body {
 .foto-extra.hidden {
     display: none; /* Las oculta completamente */
 }
+/* --- CLASES PARA ANIMACIÓN DE LA GALERÍA --- */
+.foto-extra.hidden {
+    display: none; 
+}
+
+/* Le quitamos el ".foto-extra" al principio para que CUALQUIER foto pueda usar la animación */
+.mostrar-animado {
+    animation: aparecerSuave 0.6s ease-out forwards;
+}
+
+@keyframes aparecerSuave {
+    0% { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.98); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
 
 .btn-gallery-container {
     text-align: center;
     margin-top: 3rem;
+}
+
+
+/* =========================================
+   EFECTO COMPRESIÓN (GALERÍA EXTRA)
+   ========================================= */
+.wrapper-colapsable {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wrapper-colapsable.abierto {
+    grid-template-rows: 1fr;
+}
+
+.wrapper-inner {
+    overflow: hidden;
+    padding-top: 1rem; /* Espaciado para igualar el gap en celular */
+}
+
+@media (min-width: 768px) {
+    .wrapper-inner {
+        padding-top: 1.5rem; /* Espaciado para igualar el gap en PC */
+    }
 }
 /* =========================================
    NUESTRA HISTORIA (MÓVIL)

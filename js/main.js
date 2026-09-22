@@ -100,27 +100,87 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
 });
 
 
-// --- 5. LÓGICA DE LA GALERÍA (VER MÁS) ---
+// --- 5. LÓGICA DE LA GALERÍA (ACORDEÓN, ANIMACIÓN Y SCROLL CONTROLADO) ---
 const btnVerMas = document.getElementById('btn-ver-mas');
-const fotosExtra = document.querySelectorAll('.foto-extra');
+const wrapperExtra = document.getElementById('wrapper-extra');
+const gallerySection = document.querySelector('.gallery-section');
+const fotosPrincipales = document.querySelectorAll('.gallery-section > .gallery-grid > .gallery-item'); 
+const fotosExtraItems = document.querySelectorAll('#wrapper-extra .gallery-item');
 
-if (btnVerMas) {
+// A. VIGILANTE DE SCROLL (Aparición en cascada de fotos principales)
+const observerOpciones = { threshold: 0.1 };
+const fotoObserver = new IntersectionObserver((entradas, observador) => {
+    entradas.forEach((entrada, index) => {
+        if (entrada.isIntersecting) {
+            setTimeout(() => {
+                entrada.target.classList.add('mostrar-animado');
+            }, index * 150);
+            observador.unobserve(entrada.target);
+        }
+    });
+}, observerOpciones);
+
+if (fotosPrincipales.length > 0) {
+    fotosPrincipales.forEach(foto => {
+        foto.style.opacity = '0'; 
+        fotoObserver.observe(foto);
+    });
+}
+
+// B. FUNCIÓN DE SCROLL PERSONALIZADO (Control de velocidad)
+function scrollSuave(elemento, duracion) {
+    const objetivo = elemento.getBoundingClientRect().top + window.pageYOffset - 50; 
+    const inicio = window.pageYOffset;
+    const distancia = objetivo - inicio;
+    let tiempoInicio = null;
+
+    function animacion(tiempoActual) {
+        if (tiempoInicio === null) tiempoInicio = tiempoActual;
+        const tiempoTranscurrido = tiempoActual - tiempoInicio;
+        
+        let progreso = tiempoTranscurrido / duracion;
+        let facilidad = progreso < 0.5 
+            ? 4 * progreso * progreso * progreso 
+            : 1 - Math.pow(-2 * progreso + 2, 3) / 2;
+
+        window.scrollTo(0, inicio + (distancia * facilidad));
+        
+        if (tiempoTranscurrido < duracion) {
+            requestAnimationFrame(animacion);
+        }
+    }
+    requestAnimationFrame(animacion);
+}
+
+// C. BOTÓN "VER MÁS / VER MENOS" 
+if (btnVerMas && wrapperExtra) {
     btnVerMas.addEventListener('click', function() {
-        let estanOcultas = false;
+        const estaAbierto = wrapperExtra.classList.contains('abierto');
 
-        // Revisamos cada foto extra y le quitamos o ponemos la clase 'hidden'
-        fotosExtra.forEach(foto => {
-            foto.classList.toggle('hidden');
-            if (foto.classList.contains('hidden')) {
-                estanOcultas = true;
-            }
-        });
-
-        // Cambiamos el texto del botón
-        if (estanOcultas) {
-            btnVerMas.innerText = 'Ver más fotos';
-        } else {
+        if (!estaAbierto) {
+            // ABRIR
+            wrapperExtra.classList.add('abierto');
             btnVerMas.innerText = 'Ver menos';
+
+            fotosExtraItems.forEach((foto, index) => {
+                foto.style.opacity = '0'; 
+                foto.classList.remove('mostrar-animado');
+                void foto.offsetWidth; 
+                setTimeout(() => {
+                    foto.classList.add('mostrar-animado');
+                }, index * 300); 
+            });
+
+        } else {
+            // CERRAR
+            wrapperExtra.classList.remove('abierto');
+            btnVerMas.innerText = 'Ver más fotos';
+            
+            // Aquí ajustas la velocidad: 1500 = 1.5 segundos. 
+            // Si lo quieres aún más lento, ponle 2000.
+            if (gallerySection) {
+                scrollSuave(gallerySection, 1500); 
+            }
         }
     });
 }
