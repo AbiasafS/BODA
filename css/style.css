@@ -921,6 +921,7 @@ body {
         grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
         grid-auto-rows: 250px; /* Fotos más altas */
         gap: 1.5rem;
+        grid-auto-flow: dense;
     }
     /* --- NUESTRA HISTORIA EN PC --- */
     .story-section {

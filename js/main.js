@@ -124,3 +124,39 @@ if (btnVerMas) {
         }
     });
 }
+
+// --- 6. LÓGICA DEL LIGHTBOX (GALERÍA AMPLIADA) ---
+document.addEventListener('DOMContentLoaded', function() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const galleryImages = document.querySelectorAll('.gallery-item img');
+
+    // Verificamos que el HTML del lightbox realmente exista antes de darle funciones
+    if (lightbox && lightboxImg) {
+        
+        // 1. Abrir Lightbox al hacer clic en una foto
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                lightbox.style.display = 'flex'; 
+                lightboxImg.src = this.src;      
+            });
+        });
+
+        // 2. Cerrar al hacer clic en la "X"
+        if (lightboxClose) {
+            lightboxClose.addEventListener('click', function() {
+                lightbox.style.display = 'none';
+            });
+        }
+
+        // 3. Cerrar al tocar el fondo oscuro
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    } else {
+        console.log("No se encontró el HTML del Lightbox");
+    }
+});
