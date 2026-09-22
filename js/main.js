@@ -98,3 +98,29 @@ document.getElementById('rsvp-form').addEventListener('submit', function(e) {
     const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
     window.open(url, '_blank');
 });
+
+
+// --- 5. LÓGICA DE LA GALERÍA (VER MÁS) ---
+const btnVerMas = document.getElementById('btn-ver-mas');
+const fotosExtra = document.querySelectorAll('.foto-extra');
+
+if (btnVerMas) {
+    btnVerMas.addEventListener('click', function() {
+        let estanOcultas = false;
+
+        // Revisamos cada foto extra y le quitamos o ponemos la clase 'hidden'
+        fotosExtra.forEach(foto => {
+            foto.classList.toggle('hidden');
+            if (foto.classList.contains('hidden')) {
+                estanOcultas = true;
+            }
+        });
+
+        // Cambiamos el texto del botón
+        if (estanOcultas) {
+            btnVerMas.innerText = 'Ver más fotos';
+        } else {
+            btnVerMas.innerText = 'Ver menos';
+        }
+    });
+}

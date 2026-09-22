@@ -17,7 +17,7 @@
     height: 80vh; /* Que ocupe toda la altura de la ventana para más elegancia */
     min-height: 600px;
     
-    background-image: url('../assets/portada.jpg'); 
+    background-image: url('https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto/IMG_8806_resized'); 
     background-color: var(--verde-medio);
     background-size: cover; 
     
@@ -679,6 +679,173 @@ body {
 .radio-card:hover .radio-label {
     border-color: var(--verde-oliva);
 }
+/* =========================================
+   GALERÍA DE FOTOS (MÓVIL)
+   ========================================= */
+.gallery-section {
+    padding: 5rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
+    gap: 1rem;
+    grid-auto-rows: 150px; /* Altura base de las fotos en móvil */
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Efecto al pasar el ratón (Hover) */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08); /* Zoom sutil y elegante */
+}
+
+/* Modificadores para crear el efecto Collage/Masonry */
+.item-tall {
+    grid-row: span 2; /* Ocupa el doble de alto */
+}
+
+.item-wide {
+    grid-column: span 2; /* Ocupa el doble de ancho */
+}
+/* --- CLASES PARA FOTOS EXTRA --- */
+.foto-extra.hidden {
+    display: none; /* Las oculta completamente */
+}
+
+.btn-gallery-container {
+    text-align: center;
+    margin-top: 3rem;
+}
+/* =========================================
+   NUESTRA HISTORIA (MÓVIL)
+   ========================================= */
+.story-section {
+    padding: 5rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.story-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.story-content {
+    text-align: center;
+}
+
+.story-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--verde-oscuro);
+    margin-bottom: 2.5rem;
+}
+
+/* Hitos (Fechas clave) */
+.milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(142, 153, 67, 0.3); /* Línea verde oliva sutil */
+    padding-top: 2rem;
+}
+
+.milestone-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.milestone-year {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--verde-oliva);
+    margin-bottom: 0.2rem;
+}
+
+.milestone-desc {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--verde-oscuro);
+}
+/* =========================================
+   LIGHTBOX (VISOR DE FOTOS)
+   ========================================= */
+.lightbox-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 9999; /* Por encima de absolutamente todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro casi sólido */
+    justify-content: center;
+    align-items: center;
+}
+
+/* La imagen ampliada */
+.lightbox-content {
+    max-width: 95%;
+    max-height: 90vh; /* Para que nunca sea más alta que la pantalla */
+    border-radius: 8px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease; /* Efecto suave de aparición */
+    object-fit: contain;
+}
+
+/* El botón de cerrar (X) */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10000;
+}
+
+.lightbox-close:hover {
+    color: var(--verde-oliva);
+}
+
+/* Animación */
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Hacer que el cursor indique que la foto se puede tocar */
+.gallery-item img {
+    cursor: pointer; 
+}
 
 
 
@@ -744,6 +911,49 @@ body {
     }
     .attendance-options {
         flex-direction: row; /* Uno al lado del otro en PC */
+    }
+    /* --- GALERÍA EN PC --- */
+    .gallery-section {
+        padding: 6rem 10%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
+        grid-auto-rows: 250px; /* Fotos más altas */
+        gap: 1.5rem;
+    }
+    /* --- NUESTRA HISTORIA EN PC --- */
+    .story-section {
+        padding: 8rem 10%;
+    }
+
+    .story-container {
+        flex-direction: row; /* Coloca imagen y texto lado a lado */
+        align-items: center;
+        gap: 5rem;
+    }
+
+    .story-image {
+        flex: 1; /* Ocupa la mitad del espacio */
+    }
+
+    .story-image img {
+        height: 550px; /* Foto más alta en PC */
+    }
+
+    .story-content {
+        flex: 1; /* Ocupa la otra mitad */
+        text-align: left; /* Alineamos a la izquierda para mayor elegancia */
+    }
+
+    .milestones {
+        flex-direction: row; /* Ponemos los hitos en horizontal */
+        justify-content: flex-start;
+        gap: 3rem;
+    }
+
+    .milestone-item {
+        align-items: flex-start; /* Alinear texto de los hitos a la izquierda */
     }
 }
 

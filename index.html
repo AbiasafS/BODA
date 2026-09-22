@@ -50,6 +50,38 @@
             </div>
         </section>
 
+        <!-- SECCIÓN: Nuestra Historia -->
+        <section class="story-section scroll-anim">
+            <div class="story-container">
+                
+                <!-- Foto de la pareja -->
+                <div class="story-image">
+                    <img src="assets/historia.webp" alt="Pablo y Gesuri">
+                </div>
+                
+                <!-- Relato y Fechas Clave -->
+                <div class="story-content">
+                    <h2 class="section-title">Nuestra Historia</h2>
+                    <p class="story-text">
+                        Hay historias que empiezan con una coincidencia, y la nuestra es la prueba de que el destino sabe exactamente lo que hace. Después de años de aventuras, aprendizajes y mucho amor, hemos decidido dar el siguiente gran paso.
+                    </p>
+                    
+                    <!-- Mini Hitos de la relación -->
+                    <div class="milestones">
+                        <div class="milestone-item">
+                            <span class="milestone-year">2022</span>
+                            <span class="milestone-desc">Nuestros caminos se cruzaron</span>
+                        </div>
+                        <div class="milestone-item">
+                            <span class="milestone-year">2024</span>
+                            <span class="milestone-desc">¡Dimos el sí!</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- CONTENEDOR GRID: Secciones 2 y 3 -->
         <div class="event-details-wrapper scroll-anim">
             
@@ -142,6 +174,48 @@
         </div>
 
     </main>
+
+    <!-- SECCIÓN DE GALERÍA DE FOTOS -->
+        <section class="gallery-section scroll-anim">
+            <h2 class="section-title">Nuestros Momentos</h2>
+            
+            <div class="gallery-grid">
+                <!-- FOTOS PRINCIPALES (Siempre visibles) -->
+                <div class="gallery-item item-tall">
+                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto/IMG_8806_resized" alt="Sesión 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto/IMG_8806_resized" alt="Sesión 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/galeria3.jpg" alt="Sesión 3">
+                </div>
+                <div class="gallery-item item-wide">
+                    <img src="assets/galeria4.jpg" alt="Sesión 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/galeria5.jpg" alt="Sesión 5">
+                </div>
+
+                <!-- FOTOS EXTRAS (Ocultas al inicio) -->
+                <div class="gallery-item foto-extra hidden">
+                    <img src="assets/galeria6.jpg" alt="Sesión 6">
+                </div>
+                <div class="gallery-item item-tall foto-extra hidden">
+                    <img src="assets/galeria7.jpg" alt="Sesión 7">
+                </div>
+                <div class="gallery-item foto-extra hidden">
+                    <img src="assets/galeria8.jpg" alt="Sesión 8">
+                </div>
+                <!-- Puedes seguir agregando las que quieras con la clase "foto-extra hidden" -->
+            </div>
+
+            <!-- Botón para expandir -->
+            <div class="btn-gallery-container">
+                <button id="btn-ver-mas" class="btn-location">Ver más fotos</button>
+            </div>
+        </section>
+
 
     <!-- SECCIÓN 4: Dress Code & Regalos (Efecto Parallax) -->
         <section class="extras-section scroll-anim">
@@ -319,6 +393,16 @@
 
 
 
+
+
+
+
+
+    <!-- LIGHTBOX (Visor de imágenes en pantalla completa) -->
+        <div id="lightbox" class="lightbox-modal">
+            <span class="lightbox-close">&times;</span>
+            <img class="lightbox-content" id="lightbox-img" alt="Foto ampliada">
+        </div>
 
 </body>
 </html>
