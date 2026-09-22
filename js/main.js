@@ -125,38 +125,150 @@ if (btnVerMas) {
     });
 }
 
-// --- 6. LÓGICA DEL LIGHTBOX (GALERÍA AMPLIADA) ---
+// --- 6. LÓGICA DEL LIGHTBOX (ZOOM Y DESPLAZAMIENTO DEFINITIVO) ---
 document.addEventListener('DOMContentLoaded', function() {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxClose = document.querySelector('.lightbox-close');
     const galleryImages = document.querySelectorAll('.gallery-item img');
 
-    // Verificamos que el HTML del lightbox realmente exista antes de darle funciones
     if (lightbox && lightboxImg) {
+        // Variables para el estado de la imagen
+        let currentScale = 1; 
+        let translateX = 0;
+        let translateY = 0;
         
-        // 1. Abrir Lightbox al hacer clic en una foto
+        // Variables para los cálculos de movimiento
+        let isDragging = false;
+        let startX, startY;
+        let initialDistance = null;
+
+        // Función maestra para aplicar los cambios visuales
+        const updateTransform = () => {
+            lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+        };
+
+        // Función para limpiar todo al cerrar
+        const resetZoom = () => {
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+            lightbox.style.display = 'none';
+        };
+
+        // 1. Abrir Lightbox
         galleryImages.forEach(img => {
             img.addEventListener('click', function() {
                 lightbox.style.display = 'flex'; 
-                lightboxImg.src = this.src;      
+                lightboxImg.src = this.src;
+                currentScale = 1; 
+                translateX = 0;
+                translateY = 0;
+                updateTransform();
             });
         });
 
-        // 2. Cerrar al hacer clic en la "X"
-        if (lightboxClose) {
-            lightboxClose.addEventListener('click', function() {
-                lightbox.style.display = 'none';
-            });
-        }
-
-        // 3. Cerrar al tocar el fondo oscuro
+        // 2. Cerrar (Botón X y Fondo oscuro)
+        if (lightboxClose) lightboxClose.addEventListener('click', resetZoom);
         lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                lightbox.style.display = 'none';
+            if (e.target === lightbox) resetZoom();
+        });
+
+        // ==========================================
+        //  LÓGICA DE RATÓN (PC)
+        // ==========================================
+        lightboxImg.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            currentScale += e.deltaY * -0.002;
+            currentScale = Math.min(Math.max(1, currentScale), 4);
+            if (currentScale === 1) { translateX = 0; translateY = 0; }
+            updateTransform();
+        });
+
+        lightboxImg.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // SOLUCIÓN AL CLIC PEGAJOSO (Evita arrastrar la imagen nativa)
+            if (currentScale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                lightboxImg.style.cursor = 'grabbing';
             }
         });
-    } else {
-        console.log("No se encontró el HTML del Lightbox");
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+            if (lightboxImg) {
+                lightboxImg.style.cursor = 'default';
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (isDragging && currentScale > 1) {
+                e.preventDefault();
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+            }
+        });
+
+        // ==========================================
+        //  LÓGICA TÁCTIL (MÓVIL)
+        // ==========================================
+        lightboxImg.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && currentScale > 1) {
+                // Un dedo: Inicia el arrastre
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                // Dos dedos: Inicia el zoom
+                isDragging = false;
+                initialDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+            }
+        });
+
+        lightboxImg.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging && currentScale > 1) {
+                // Un dedo: Mueve la imagen
+                e.preventDefault();
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateTransform();
+            } 
+            else if (e.touches.length === 2) {
+                // Dos dedos: Hace zoom
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+
+                if (initialDistance) {
+                    const difference = currentDistance - initialDistance;
+                    currentScale += difference * 0.005; 
+                    currentScale = Math.min(Math.max(1, currentScale), 4);
+                    
+                    // Si regresan al tamaño original, centramos la foto automáticamente
+                    if (currentScale === 1) {
+                        translateX = 0;
+                        translateY = 0;
+                    }
+                    
+                    updateTransform();
+                    initialDistance = currentDistance; 
+                }
+            }
+        });
+
+        lightboxImg.addEventListener('touchend', (e) => {
+            isDragging = false;
+            if (e.touches.length < 2) {
+                initialDistance = null;
+            }
+        });
     }
 });
