@@ -1,0 +1,200 @@
+/* --- DISEÑO PROPIO PARA UPLOAD --- */
+.upload-section {
+    padding: 5rem 1.5rem;
+    background: var(--crema);
+    min-height: 100vh;
+}
+
+.upload-section .section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--verde-oscuro);
+    font-size: 2rem;
+}
+
+.upload-container {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(66, 71, 31, 0.3);
+}
+
+.upload-card {
+    background: var(--crema);
+    padding: 3rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.upload-titulo {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: var(--verde-oliva);
+    font-size: 1.8rem;
+}
+
+.upload-titulo span {
+    color: var(--verde-oscuro);
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--verde-oscuro);
+}
+
+.form-input, 
+.form-select {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    background: var(--crema);
+    border: 2px solid rgba(142, 153, 67, 0.3);
+    border-radius: 10px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:hover,
+.form-select:hover {
+    border-color: var(--verde-oliva);
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--verde-oliva);
+    box-shadow: 0 0 0 4px rgba(99, 107, 47, 0.15);
+}
+
+.custom-file {
+    display: block;
+    margin: 1.5rem 0;
+}
+
+.custom-file-input {
+    display: none;
+}
+
+.custom-file-label {
+    display: inline-block;
+    padding: 1rem 1.5rem;
+    color: var(--crema);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: 2px solid var(--verde-oliva);
+}
+
+.custom-file-label:hover {
+    background: var(--verde-oscuro);
+    color: white;
+}
+
+.custom-file-label:focus {
+    outline: none;
+    border-color: var(--verde-oscuro);
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6l6-6'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 3rem;
+}
+
+.btn-subir {
+    width: 100%;
+    padding: 1.3rem;
+    background: var(--verde-oliva);
+    color: var(--crema);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(99, 107, 47, 0.3);
+}
+
+.btn-subir:hover {
+    background: var(--verde-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(99, 107, 47, 0.4);
+}
+
+.btn-subir:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(99, 107, 47, 0.3);
+}
+
+.btn-subir:focus {
+    outline: none;
+    box-shadow: 0 4px 10px rgba(99, 107, 47, 0.3);
+}
+
+.estado-upload {
+    text-align: center;
+    padding: 2rem;
+    display: none;
+}
+
+.estado-upload.activo {
+    display: block;
+}
+
+.estado-upload.exito {
+    color: var(--verde-oliva);
+}
+
+.estado-upload.error {
+    color: #e74c3c;
+}
+
+.upload-tips {
+    background: var(--crema);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--verde-oliva);
+}
+
+.upload-tips h4 {
+    color: var(--verde-oliva);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.upload-tips ul {
+    text-align: left;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.upload-tips li {
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+}
+
+

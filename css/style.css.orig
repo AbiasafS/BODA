@@ -1,0 +1,1096 @@
+/* Variables Globales (Tu paleta de colores) */
+:root {
+    --verde-oscuro: #42471F;
+    --verde-oliva: #636B2F;
+    --verde-medio: #8E9943;
+    --verde-pistacho: #B3C255;
+    --verde-claro: #D9EB67;
+    --crema: #FAF9F6;
+    
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Montserrat', s    ans-serif;
+}
+/* --- PORTADA (Hero) --- */
+/* --- PORTADA (Hero) --- */
+.hero {
+    position: relative;
+    height: 80vh; /* Que ocupe toda la altura de la ventana para más elegancia */
+    min-height: 600px;
+    
+    background-image: url('https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto/IMG_8806_resized'); 
+    background-color: var(--verde-medio);
+    background-size: cover; 
+    
+    /* EL SECRETO ESTÁ AQUÍ: 'center 20%' 
+       Esto centra la imagen horizontalmente, pero verticalmente muestra el 20% superior.
+       Si aún se cortan un poco, bájalo a 10% o 0% (top). Si hay mucho cielo, súbelo a 30%. */
+    background-position: center 20%; 
+    background-repeat: no-repeat;
+    
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 5rem; /* Subimos un poco el texto para que no quede al ras */
+}
+
+
+
+/* Reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+
+body {
+    background-color: var(--crema);
+    font-family: var(--font-sans);
+    color: var(--verde-oscuro);
+    margin: 0;
+    min-height: 100vh;
+}
+
+.mobile-container {
+    /* Ahora ocupará todo el ancho disponible */
+    width: 100%;
+    max-width: 100%;
+    background-color: var(--crema);
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+/* Degradado para transición suave hacia el fondo crema */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, var(--crema) 15%, transparent);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 1.5rem;
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.title span {
+    font-size: 2.2rem;
+    font-style: italic;
+    color: var(--verde-oliva);
+}
+
+.date-divider {
+    width: 50px;
+    height: 1px;
+    background-color: var(--verde-oscuro);
+    margin: 1.5rem auto 1rem;
+}
+
+.date {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+}
+
+/* --- CUENTA REGRESIVA --- */
+.countdown-section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.countdown-section h2 {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.time-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 55px;
+}
+
+.time-box span {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--verde-oscuro);
+}
+
+.time-box p {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.4rem;
+}
+
+.colon {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    color: var(--verde-medio);
+}
+
+/* --- ANIMACIONES --- */
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-anim.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+/* Seccion 2 */
+
+/* =========================================
+   SECCIONES 2 Y 3: DETALLES E ITINERARIO (MÓVIL)
+   ========================================= */
+.event-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding: 4rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+}
+
+/* Tarjetas de Ubicación */
+.location-card {
+    background-color: #fff;
+    border: 1px solid rgba(142, 153, 67, 0.2); /* Borde sutil verde-medio */
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.location-card h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oscuro);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.location-card .time {
+    color: var(--verde-medio);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+}
+
+.location-card .place, .location-card .address {
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+    margin-bottom: 0.2rem;
+}
+
+.btn-location {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.5rem;
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 50px;
+    transition: background-color 0.3s;
+}
+
+.btn-location:hover {
+    background-color: var(--verde-oscuro);
+}
+
+/* La línea de tiempo (Ajustada) */
+.timeline {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+    padding-left: 24px;
+    border-left: 1px solid var(--verde-medio);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -29.5px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--crema);
+    border: 2px solid var(--verde-oliva);
+    border-radius: 50%;
+}
+
+.timeline-time {
+    font-size: 0.85rem;
+    color: var(--verde-medio);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.1em;
+}
+
+.timeline-text h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oscuro);
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+}
+
+.timeline-text p {
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+    opacity: 0.8;
+}
+
+
+/* =========================================
+   VENTANAS EMERGENTES (MODALES)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(30, 35, 15, 0.7); /* Fondo oscuro con tono verdoso */
+    display: flex;
+    align-items: center; justify-content: center;
+    z-index: 9999; /* Para que quede encima de TODO */
+    
+    /* Efecto de aparecer suavemente */
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1; pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--crema);
+    width: 90%; max-width: 450px;
+    border-radius: 12px; padding: 2rem 1.5rem;
+    position: relative; text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    
+    /* Efecto de deslizarse hacia arriba */
+    transform: translateY(30px); transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute; top: 5px; right: 15px;
+    font-size: 2.2rem; background: none; border: none;
+    color: var(--verde-oscuro); cursor: pointer;
+}
+
+.modal-content h3 {
+    font-family: var(--font-serif); color: var(--verde-oliva);
+    font-size: 1.6rem; margin-bottom: 1.2rem; margin-top: 0.5rem;
+}
+
+.modal-gallery img {
+    width: 100%; height: 160px; object-fit: cover;
+    border-radius: 8px; margin-bottom: 1.5rem;
+}
+
+.modal-map {
+    width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 1.5rem;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Modificador para que el botón ocupe todo el ancho */
+.btn-full { 
+    display: block; width: 100%; 
+    box-sizing: border-box; 
+}
+
+.modal-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.modal-icon svg {
+    width: 60px;
+    height: 60px;
+    opacity: 0.85; /* Lo suaviza un poco para que sea elegante */
+}
+
+
+/* =========================================
+   SECCIÓN 4: EXTRAS (PARALLAX) - MÓVIL
+   ========================================= */
+.extras-section {
+    position: relative;
+    padding: 5rem 1.5rem;
+    
+    /* EL EFECTO PARALLAX ESTÁ EN ESTAS 4 LÍNEAS */
+    background-image: url('../assets/fondo-parallax.jpg'); /* Añade una foto a tus assets */
+    background-attachment: fixed; 
+    background-position: center;
+    background-size: cover;
+}
+
+.parallax-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Ponemos tu verde oscuro con un 85% de opacidad para tapar un poco la foto */
+    background-color: rgba(66, 71, 31, 0.85); 
+    z-index: 1;
+}
+
+.extras-content {
+    position: relative;
+    z-index: 2; /* Asegura que las tarjetas queden por encima del fondo oscuro */
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* Tarjetas flotantes */
+.extra-card {
+    background-color: var(--crema);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+.extra-card h3 {
+    font-family: var(--font-serif);
+    color: var(--verde-oliva);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.dress-code {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--verde-oscuro);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.dress-note, .gift-note {
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Círculos de color */
+.color-palette {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--crema);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Caja de datos bancarios */
+.bank-details {
+    background-color: rgba(142, 153, 67, 0.15); /* Verde medio súper clarito */
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+}
+
+.bank-details p {
+    margin-bottom: 0.4rem;
+}
+/* Botones de Mesas de Regalos */
+.registry-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-registry {
+    display: block;
+    padding: 0.8rem;
+    border: 1px solid var(--verde-oliva);
+    color: var(--verde-oliva);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse por encima (Hover) */
+.btn-registry:hover {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+}
+
+/* Línea separadora con texto centrado */
+.gift-divider {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.gift-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(142, 153, 67, 0.3); /* Línea sutil */
+    z-index: 1;
+}
+
+.gift-divider span {
+    position: relative;
+    background-color: var(--crema); /* Fondo igual al de la tarjeta para cortar la línea */
+    padding: 0 1rem;
+    color: var(--verde-medio);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    z-index: 2;
+}
+/* =========================================
+   SECCIÓN 5: RSVP (FORMULARIO)
+   ========================================= */
+.rsvp-section {
+    padding: 6rem 1.5rem;
+    background-color: var(--crema);
+    display: flex;
+    justify-content: center;
+}
+
+.rsvp-container {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    border: 1px solid rgba(142, 153, 67, 0.1);
+}
+
+
+.rsvp-text {
+    font-size: 0.95rem;
+    color: var(--verde-oscuro);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.rsvp-form {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: var(--crema);
+    font-family: var(--font-sans);
+    color: var(--verde-oscuro);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--verde-oliva);
+}
+
+.btn-rsvp {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    border: none;
+    padding: 1.2rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-rsvp:hover {
+    background-color: var(--verde-oscuro);
+}
+
+/* =========================================
+   FOOTER (PIE DE PÁGINA)
+   ========================================= */
+.site-footer {
+    background-color: var(--verde-oscuro);
+    color: var(--crema);
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.footer-names {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--verde-claro);
+}
+
+.footer-date {
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.footer-credits {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.footer-links {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--verde-oliva);
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.footer-link {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: var(--verde-oliva);
+    color: var(--crema);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(99, 107, 47, 0.3);
+}
+
+.footer-link:hover {
+    background: var(--verde-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(99, 107, 47, 0.4);
+}
+
+.footer-link:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(99, 107, 47, 0.3);
+}
+/* --- BOTONES DE SELECCIÓN (RADIO BUTTONS) --- */
+.attendance-options {
+    display: flex;
+    flex-direction: column; /* Apilados en celular */
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.radio-card {
+    cursor: pointer;
+    flex: 1; /* Para que en PC ocupen la mitad cada uno */
+}
+
+/* Ocultamos el circulito feo nativo del radio button */
+.radio-card input {
+    display: none; 
+}
+
+/* Diseñamos la etiqueta como si fuera un botón */
+.radio-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid rgba(142, 153, 67, 0.3); /* Borde verde oliva sutil */
+    border-radius: 8px;
+    text-align: center;
+    color: var(--verde-oscuro);
+    background-color: var(--crema);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+/* ESTADO SELECCIONADO: Cuando el usuario hace clic */
+.radio-card input:checked + .radio-label {
+    background-color: var(--verde-oliva);
+    color: var(--crema);
+    border-color: var(--verde-oliva);
+    box-shadow: 0 4px 10px rgba(142, 153, 67, 0.3);
+}
+
+/* Efecto hover suave (para PC) */
+.radio-card:hover .radio-label {
+    border-color: var(--verde-oliva);
+}
+/* =========================================
+   GALERÍA DE FOTOS (MÓVIL)
+   ========================================= */
+.gallery-section {
+    padding: 5rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
+    gap: 1rem;
+    grid-auto-rows: 150px; /* Altura base de las fotos en móvil */
+}
+
+.gallery-item {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Efecto al pasar el ratón (Hover) */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08); /* Zoom sutil y elegante */
+}
+
+/* Modificadores para crear el efecto Collage/Masonry */
+.item-tall {
+    grid-row: span 2; /* Ocupa el doble de alto */
+}
+
+.item-wide {
+    grid-column: span 2; /* Ocupa el doble de ancho */
+}
+/* --- CLASES PARA FOTOS EXTRA --- */
+.foto-extra.hidden {
+    display: none; /* Las oculta completamente */
+}
+/* --- CLASES PARA ANIMACIÓN DE LA GALERÍA --- */
+.foto-extra.hidden {
+    display: none; 
+}
+
+/* Le quitamos el ".foto-extra" al principio para que CUALQUIER foto pueda usar la animación */
+.mostrar-animado {
+    animation: aparecerSuave 0.6s ease-out forwards;
+}
+
+@keyframes aparecerSuave {
+    0% { 
+        opacity: 0; 
+        transform: translateY(40px) scale(0.98); 
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+.btn-gallery-container {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+
+/* =========================================
+   EFECTO COMPRESIÓN (GALERÍA EXTRA)
+   ========================================= */
+.wrapper-colapsable {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wrapper-colapsable.abierto {
+    grid-template-rows: 1fr;
+}
+
+.wrapper-inner {
+    overflow: hidden;
+    padding-top: 1rem; /* Espaciado para igualar el gap en celular */
+}
+
+@media (min-width: 768px) {
+    .wrapper-inner {
+        padding-top: 1.5rem; /* Espaciado para igualar el gap en PC */
+    }
+}
+/* =========================================
+   NUESTRA HISTORIA (MÓVIL)
+   ========================================= */
+.story-section {
+    padding: 5rem 1.5rem;
+    background-color: var(--crema);
+}
+
+.story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.story-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.story-content {
+    text-align: center;
+}
+
+.story-text {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--verde-oscuro);
+    margin-bottom: 2.5rem;
+}
+
+/* Hitos (Fechas clave) */
+.milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(142, 153, 67, 0.3); /* Línea verde oliva sutil */
+    padding-top: 2rem;
+}
+
+.milestone-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.milestone-year {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--verde-oliva);
+    margin-bottom: 0.2rem;
+}
+
+.milestone-desc {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--verde-oscuro);
+}
+/* =========================================
+   LIGHTBOX (VISOR DE FOTOS)
+   ========================================= */
+.lightbox-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 9999; /* Por encima de absolutamente todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo negro casi sólido */
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+}
+
+/* La imagen ampliada */
+.lightbox-content {
+    max-width: 95%;
+    max-height: 90vh; /* Para que nunca sea más alta que la pantalla */
+    border-radius: 8px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s ease; /* Efecto suave de aparición */
+    object-fit: contain;
+    transition: transform 0.1s ease-out; /* Suaviza el acercamiento */
+
+
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* El botón de cerrar (X) */
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10000;
+}
+
+.lightbox-close:hover {
+    color: var(--verde-oliva);
+}
+
+/* Animación */
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Hacer que el cursor indique que la foto se puede tocar */
+.gallery-item img {
+    cursor: pointer; 
+}
+
+
+
+@media (min-width: 768px) {
+    .hero {
+        height: 100vh; /* 100% del alto de la ventana en PC */
+        padding-bottom: 5rem; /* Subimos un poco más el texto en PC */
+    }
+
+    /* --- SECCIONES 2 Y 3 EN PC (CSS GRID) --- */
+    .event-details-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Divide la pantalla en dos mitades iguales */
+        gap: 6rem; /* Separación amplia entre la información y el itinerario */
+        padding: 6rem 10%;
+        align-items: start; /* Para que las columnas no se estiren forzosamente hacia abajo */
+    }
+
+    .section-title {
+        text-align: left; /* Alineamos los títulos a la izquierda en PC */
+        font-size: 3rem;
+        margin-bottom: 3.5rem;
+    }
+
+    /* Ajustes de las tarjetas para PC */
+    .location-card {
+        text-align: left;
+        padding: 2.5rem;
+    }
+
+    .timeline {
+        margin: 0; /* Quitamos el centrado de móvil */
+        max-width: 100%;
+    }
+    /* --- SECCIÓN 4 EN PC --- */
+    .extras-section {
+        padding: 8rem 10%;
+    }
+
+    .extras-content {
+        flex-direction: row; /* Coloca una tarjeta junto a la otra */
+        gap: 5rem; /* Separación amplia */
+    }
+
+    .extra-card {
+        flex: 1; /* Ambas tarjetas ocupan exactamente el mismo ancho (50%) */
+        padding: 4rem 3rem;
+    }
+    /* --- SECCIÓN 5: RSVP EN PC --- */
+    .rsvp-container {
+        flex-direction: row; /* Coloca la imagen a la izquierda y el form a la derecha */
+        align-items: stretch; /* Hace que la foto y el form tengan la misma altura */
+    }
+
+    .rsvp-image {
+        width: 45%; /* La foto ocupa casi la mitad de la tarjeta */
+        height: auto; /* Se ajusta automáticamente a la altura del formulario */
+    }
+
+    .rsvp-content {
+        width: 55%; /* El formulario ocupa el resto */
+        padding: 4rem; /* Más espacio interior para que respire en PC */
+    }
+    .attendance-options {
+        flex-direction: row; /* Uno al lado del otro en PC */
+    }
+    /* --- GALERÍA EN PC --- */
+    .gallery-section {
+        padding: 6rem 10%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en PC para mejor vista */
+        grid-auto-rows: 200px; /* Fotos más proporcionadas */
+        gap: 1rem;
+        grid-auto-flow: dense;
+        margin-bottom: 3rem;
+    }
+
+    /* --- ESTILOS PARA GALERÍA ADICIONAL (galeria.html) --- */
+    .gallery-filter {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: none;
+        border: 1px solid var(--verde-oliva);
+        color: var(--verde-oscuro);
+        padding: 0.5rem 1.5rem;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .filter-btn.active {
+        background-color: var(--verde-oliva);
+        color: var(--crema);
+    }
+
+    .filter-btn:hover:not(.active) {
+        background-color: var(--verde-oliva);
+        color: var(--crema);
+    }
+
+    /* --- ESTILOS PARA CARGA INFINITA --- */
+    .infinite-scroll-status {
+        transition: opacity 0.3s;
+    }
+
+    .infinite-scroll-status.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    #noMorePhotos {
+        font-size: 0.9rem;
+    }
+    /* --- NUESTRA HISTORIA EN PC --- */
+    .story-section {
+        padding: 8rem 10%;
+    }
+
+    .story-container {
+        flex-direction: row; /* Coloca imagen y texto lado a lado */
+        align-items: center;
+        gap: 5rem;
+    }
+
+    .story-image {
+        flex: 1; /* Ocupa la mitad del espacio */
+    }
+
+    .story-image img {
+        height: 550px; /* Foto más alta en PC */
+    }
+
+    .story-content {
+        flex: 1; /* Ocupa la otra mitad */
+        text-align: left; /* Alineamos a la izquierda para mayor elegancia */
+    }
+
+    .milestones {
+        flex-direction: row; /* Ponemos los hitos en horizontal */
+        justify-content: flex-start;
+        gap: 3rem;
+    }
+
+    .milestone-item {
+        align-items: flex-start; /* Alinear texto de los hitos a la izquierda */
+    }
+}
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Completa - Nuestra Boda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/galeria.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+    <!-- Contenedor centralizado -->
+    <main class="mobile-container">
+        
+        <!-- SECCIÓN: Galería Completa -->
+        <section class="gallery-section">
+            <div class="container">
+                <h2 class="section-title">Nuestra Galería Completa</h2>
+                
+                <!-- Filtros de categoría -->
+                <div class="gallery-filters">
+                    <button class="gallery-filter-btn active" data-cat="all">Todas</button>
+                    <button class="gallery-filter-btn" data-cat="pre-wedding">Pre-boda</button>
+                    <button class="gallery-filter-btn" data-cat="ceremonia">Ceremonia</button>
+                    <button class="gallery-filter-btn" data-cat="recepción">Recepción</button>
+                    <button class="gallery-filter-btn" data-cat="fiesta">Fiesta</button>
+                </div>
+                
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Fotos se cargarán con JavaScript -->
+                </div>
+                
+                <div class="loading" id="loadingStatus">
+                    Cargando fotos...
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- LIGHTBOX (Visor de imágenes en pantalla completa) -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" alt="Foto ampliada">
+        <span class="gallery-nav gallery-nav-prev" id="nav-prev" aria-label="Foto anterior">
+            <
+        </span>
+        <span class="gallery-nav gallery-nav-next" id="nav-next" aria-label="Siguiente foto">
+            >
+        </span>
+    </div>
+
+    <!-- Enlace al archivo JS externo -->
+    <script src="js/main.js"></script>
+    
+    <!-- Lógica de galería -->
+    <script>
+        // Datos de todas las fotos organizadas por categoría
+        const fotosPorCategoria = {
+            pre_wedding: [
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8950_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9182_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9106_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9181_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9080_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8722_resized.jpg"
+            ],
+            ceremonia: [
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg"
+            ],
+            recepcion: [
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg",
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg"
+            ],
+            fiesta: [
+                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg",
+                "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&h=600&fit=crop"
+            ]
+        };
+
+        // Aplanar todas las fotos manteniendo la categoría
+        const todasLasFotos = [];
+        
+        for (const [categoria, urls] of Object.entries(fotosPorCategoria)) {
+            urls.forEach((src, index) => {
+                todasLasFotos.push({
+                    src: src,
+                    alt: `Foto de ${categoria}`,
+                    categoria: categoria
+                });
+            });
+        }
+
+        // Elementos del DOM
+        const grid = document.getElementById('galleryGrid');
+        const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+        
+        function renderizarGalería(fotosMostrar) {
+            grid.innerHTML = '';
+            
+            fotosMostrar.forEach((foto, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${foto.src}" alt="${foto.alt}" loading="lazy" data-index="${index}">
+                `;
+                grid.appendChild(item);
+            });
+        }
+        
+        // Filtrar por categoría
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Actualizar estado activo
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filtro = btn.dataset.cat;
+                let fotosFiltradas;
+                
+                if (filtro === 'all') {
+                    fotosFiltradas = todasLasFotos;
+                } else {
+                    fotosFiltradas = todasLasFotos.filter(f => f.categoria === filtro);
+                }
+                
+                renderizarGalería(fotosFiltradas);
+            });
+        });
+        
+        // Renderizar todas al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarGalería(todasLasFotos);
+        });
+    </script>
+</body>
+</html>

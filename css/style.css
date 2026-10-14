@@ -638,6 +638,39 @@ body {
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
+
+.footer-links {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--verde-oliva);
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.footer-link {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background: var(--verde-oliva);
+    color: var(--crema);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(99, 107, 47, 0.3);
+}
+
+.footer-link:hover {
+    background: var(--verde-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(99, 107, 47, 0.4);
+}
+
+
+
 /* --- BOTONES DE SELECCIÓN (RADIO BUTTONS) --- */
 .attendance-options {
     display: flex;
@@ -1011,4 +1044,3 @@ body {
         align-items: flex-start; /* Alinear texto de los hitos a la izquierda */
     }
 }
-
