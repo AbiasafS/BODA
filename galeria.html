@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/galeria.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
 </head>
 <body>
     <!-- Contenedor centralizado -->
@@ -43,18 +42,9 @@
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close" id="lightbox-close">&times;</span>
         <img class="lightbox-img" id="lightbox-img" alt="Foto ampliada">
-        <span class="gallery-nav gallery-nav-prev" id="nav-prev" aria-label="Foto anterior">
-            <
-        </span>
-        <span class="gallery-nav gallery-nav-next" id="nav-next" aria-label="Siguiente foto">
-            >
-        </span>
     </div>
 
-    <!-- Enlace al archivo JS externo -->
-    <script src="js/main.js"></script>
-    
-    <!-- Lógica de galería -->
+    <!-- Lógica de galería: lightbox, zoom y cierre al pulsar fuera de la imagen -->
     <script>
         // Datos de todas las fotos organizadas por categoría
         const fotosPorCategoria = {
@@ -83,58 +73,204 @@
 
         // Aplanar todas las fotos manteniendo la categoría
         const todasLasFotos = [];
-        
         for (const [categoria, urls] of Object.entries(fotosPorCategoria)) {
-            urls.forEach((src, index) => {
-                todasLasFotos.push({
-                    src: src,
-                    alt: `Foto de ${categoria}`,
-                    categoria: categoria
-                });
+            urls.forEach(src => {
+                todasLasFotos.push({ src: src, alt: `Foto de ${categoria}`, categoria: categoria });
             });
         }
 
         // Elementos del DOM
         const grid = document.getElementById('galleryGrid');
         const filterBtns = document.querySelectorAll('.gallery-filter-btn');
-        
-        function renderizarGalería(fotosMostrar) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // Estado del zoom / arrastre
+        let fotosVisibles = todasLasFotos;
+        let currentIndex = 0;
+        let currentScale = 1;
+        let translateX = 0;
+        let translateY = 0;
+        let isDragging = false;
+        let startX, startY;
+        let initialDistance = null;
+
+        function updateTransform() {
+            lightboxImg.style.transform =
+                `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+        }
+
+        function resetZoom() {
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        }
+
+        // Renderizar grid de miniaturas
+        function renderizarGaleria(fotos) {
+            fotosVisibles = fotos;
             grid.innerHTML = '';
-            
-            fotosMostrar.forEach((foto, index) => {
+
+            fotos.forEach((foto, index) => {
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
-                item.innerHTML = `
-                    <img src="${foto.src}" alt="${foto.alt}" loading="lazy" data-index="${index}">
-                `;
+
+                const img = document.createElement('img');
+                img.src = foto.src;
+                img.alt = foto.alt;
+                img.loading = 'lazy';
+                img.addEventListener('click', () => openLightbox(index));
+
+                item.appendChild(img);
                 grid.appendChild(item);
             });
         }
-        
-        // Filtrar por categoría
+
+        // Abrir lightbox
+        function openLightbox(index) {
+            currentIndex = index;
+            const foto = fotosVisibles[index];
+            if (!foto) return;
+
+            lightboxImg.src = foto.src;
+            lightboxImg.alt = foto.alt;
+            resetZoom();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Cerrar lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetZoom();
+            lightboxImg.src = '';
+        }
+
+        // Filtros por categoría
+        const mapaCategorias = {
+            'all': 'all',
+            'pre-wedding': 'pre_wedding',
+            'ceremonia': 'ceremonia',
+            'recepción': 'recepcion',
+            'recepcion': 'recepcion',
+            'fiesta': 'fiesta'
+        };
+
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Actualizar estado activo
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                
-                const filtro = btn.dataset.cat;
-                let fotosFiltradas;
-                
-                if (filtro === 'all') {
-                    fotosFiltradas = todasLasFotos;
-                } else {
-                    fotosFiltradas = todasLasFotos.filter(f => f.categoria === filtro);
-                }
-                
-                renderizarGalería(fotosFiltradas);
+
+                const cat = mapaCategorias[btn.dataset.cat] || btn.dataset.cat;
+                renderizarGaleria(
+                    cat === 'all' ? todasLasFotos : todasLasFotos.filter(f => f.categoria === cat)
+                );
             });
         });
-        
-        // Renderizar todas al cargar
-        document.addEventListener('DOMContentLoaded', () => {
-            renderizarGalería(todasLasFotos);
+
+        // --- CIERRE DEL LIGHTBOX ---
+        // Cerrar con la "X"
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Cerrar al pulsar FUERA de la imagen (sobre el fondo oscuro)
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
         });
+
+        // Cerrar con la tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+        });
+
+        // --- ZOOM ---
+        // Rueda del ratón (PC)
+        lightboxImg.addEventListener('wheel', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            e.preventDefault();
+            currentScale += e.deltaY * -0.002;
+            currentScale = Math.min(Math.max(1, currentScale), 4);
+            if (currentScale === 1) { translateX = 0; translateY = 0; }
+            updateTransform();
+        }, { passive: false });
+
+        // Doble clic para acercar / alejar
+        lightboxImg.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            if (currentScale === 1) {
+                currentScale = 1.8;
+            } else {
+                currentScale = 1;
+                translateX = 0;
+                translateY = 0;
+            }
+            updateTransform();
+        });
+
+        // Arrastre con el ratón cuando está ampliada
+        lightboxImg.addEventListener('mousedown', (e) => {
+            if (currentScale <= 1) return;
+            e.preventDefault();
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging || currentScale <= 1) return;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
+        });
+
+        // Zoom táctil (pellizcar) y arrastre en móvil
+        lightboxImg.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && currentScale > 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                initialDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+            }
+        }, { passive: false });
+
+        lightboxImg.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging && currentScale > 1) {
+                e.preventDefault();
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                if (initialDistance) {
+                    currentScale += (currentDistance - initialDistance) * 0.005;
+                    currentScale = Math.min(Math.max(1, currentScale), 4);
+                    if (currentScale === 1) { translateX = 0; translateY = 0; }
+                    updateTransform();
+                    initialDistance = currentDistance;
+                }
+            }
+        }, { passive: false });
+
+        lightboxImg.addEventListener('touchend', () => {
+            isDragging = false;
+            if (initialDistance) initialDistance = null;
+        });
+
+        // Renderizado inicial
+        renderizarGaleria(todasLasFotos);
     </script>
 </body>
 </html>
