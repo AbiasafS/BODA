@@ -6,6 +6,7 @@
     <title>Nuestra Boda</title>
     <!-- Enlace al archivo CSS externo -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rsvp.css">
     <!-- Fuentes tipográficas (Montserrat y Playfair Display) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
@@ -274,6 +275,13 @@
                 <h2 class="section-title">Confirmación de Asistencia</h2>
                 <p class="rsvp-text">Esperamos contar con tu presencia para compartir este día tan especial. Por favor, ayúdanos confirmando tu asistencia antes del 10 de Noviembre.</p>
 
+                <!-- Invitación personalizada (se rellena con ?inv=TOKEN) -->
+                <div class="rsvp-invitacion" id="rsvp-invitacion" hidden>
+                    <p class="rsvp-invitacion-eyebrow">Invitación personal</p>
+                    <p class="rsvp-invitacion-nombre" id="rsvp-invitacion-nombre"></p>
+                    <p class="rsvp-invitacion-pases" id="rsvp-invitacion-pases"></p>
+                </div>
+
                 <!-- Imagen decorativa para el formulario -->
                 <div class="rsvp-image"></div>
 
@@ -301,12 +309,25 @@
                         </div>
                     </div>
 
+                    <div class="form-group" id="grupo-personas" hidden>
+                        <label for="personas">¿Cuántas personas asistirán?</label>
+                        <select id="personas"></select>
+                        <p class="rsvp-hint" id="rsvp-hint"></p>
+                    </div>
+
+                    <div class="form-group" id="grupo-nombres" hidden>
+                        <label for="nombres">Nombres de quienes asistirán (Opcional)</label>
+                        <input type="text" id="nombres" placeholder="Ej. Luis, Ana y los niños">
+                    </div>
+
                     <div class="form-group">
                         <label for="mensaje">Mensaje para los novios (Opcional)</label>
                         <textarea id="mensaje" rows="3" placeholder="Déjanos tus buenos deseos..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-rsvp">Confirmar por WhatsApp</button>
+                    <p class="rsvp-status" id="rsvp-status" role="status" aria-live="polite" hidden></p>
+                    <a class="rsvp-wa" id="rsvp-wa" href="#" target="_blank" rel="noopener" hidden>Escríbenos por WhatsApp</a>
                 </form>
             </div>
         </section>

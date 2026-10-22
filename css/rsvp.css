@@ -1,0 +1,114 @@
+/* =========================================================
+   RSVP — invitación personalizada
+   Archivo propio de index.html. No se toca css/style.css.
+   Usa la misma paleta y tipografías del resto del sitio.
+   ========================================================= */
+
+/* Tarjeta que muestra a quién va dirigida la invitación */
+.rsvp-invitacion {
+    margin: 0 0 2rem;
+    padding: 1.5rem 1.25rem 1.4rem;
+    border-radius: 10px;
+    border: 1px solid rgba(142, 153, 67, 0.28);
+    background: linear-gradient(
+        160deg,
+        rgba(217, 235, 103, 0.2) 0%,
+        rgba(250, 249, 246, 0.65) 100%
+    );
+    text-align: center;
+}
+
+.rsvp-invitacion::after {
+    content: "";
+    display: block;
+    width: 38px;
+    height: 1px;
+    margin: 0.9rem auto 0;
+    background-color: var(--verde-medio);
+    opacity: 0.6;
+}
+
+.rsvp-invitacion-eyebrow {
+    margin-bottom: 0.45rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--verde-oliva);
+}
+
+.rsvp-invitacion-nombre {
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    line-height: 1.2;
+    color: var(--verde-oscuro);
+    margin-bottom: 0.35rem;
+}
+
+.rsvp-invitacion-pases {
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--verde-medio);
+}
+
+/* Texto de ayuda bajo el selector de personas */
+.rsvp-hint {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--verde-oliva);
+    opacity: 0.85;
+}
+
+/* Mensajes de confirmación / error */
+.rsvp-status {
+    margin-top: 0.25rem;
+    min-height: 1.2em;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.rsvp-status.exito {
+    color: var(--verde-oliva);
+    font-weight: 500;
+}
+
+.rsvp-status.error {
+    color: #a4453b;
+}
+
+/* Botón mientras se envía */
+.btn-rsvp:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--verde-oliva);
+}
+
+/* Enlace de respaldo por WhatsApp */
+.rsvp-wa {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--verde-oliva);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.rsvp-wa:hover {
+    color: var(--verde-oscuro);
+}
+
+/* El atributo hidden debe ganar a los display de las clases */
+.rsvp-invitacion[hidden],
+.rsvp-hint[hidden],
+.rsvp-status[hidden],
+.rsvp-wa[hidden],
+.form-group[hidden] {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rsvp-wa {
+        transition: none;
+    }
+}

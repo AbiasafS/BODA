@@ -7,3 +7,10 @@
 # Credenciales / manifiestos generados
 scripts/manifest_*.json
 .env
+
+# Lista de invitados generada (nombres, pases y tokens: no se publica)
+scripts/invitados*.csv
+
+# Python
+__pycache__/
+*.pyc

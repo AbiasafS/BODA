@@ -70,34 +70,282 @@ function closeModal(modalId) {
     document.body.style.overflow = 'auto'; 
 }
 
-// --- 4. LÓGICA DEL FORMULARIO RSVP A WHATSAPP ---
-document.getElementById('rsvp-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita que la página se recargue
+// --- 4. RSVP: INVITACIÓN PERSONALIZADA + RESPALDO POR WHATSAPP ---
 
-    // 1. Obtener los valores de los campos
-    const nombre = document.getElementById('nombre').value.trim();
-    const asistencia = document.querySelector('input[name="asistencia"]:checked').value;
-    const mensaje = document.getElementById('mensaje').value.trim();
+// URL del Web App de Google Apps Script (ver apps-script/README.md).
+// Mientras esté vacía, el formulario funciona como antes (WhatsApp).
+const RSVP_API = 'https://script.google.com/macros/s/AKfycbyuWclA_6VzfeZhTP9wMovWKiis_S0OumaE-PAV8MJJNRn63gDRkEFFscIRvdb6jSlcEA/exec';
 
-    // 2. Tu número de teléfono (Debe incluir el código de país, ej. 52 para México)
-    const telefono = "529999584946"; // <-- CAMBIA ESTO POR EL NÚMERO REAL
+// Número de los novios para el respaldo por WhatsApp (código de país incluido).
+const TELEFONO_NOVIOS = '529999584946';
 
-    // 3. Armar el mensaje para WhatsApp
-    let textoWhatsApp = `¡Hola! Vengo a confirmar mi asistencia a la boda. 💍\n\n`;
-    textoWhatsApp += `*Nombre:* ${nombre}\n`;
-    textoWhatsApp += `*Asistencia:* ${asistencia}\n`;
-    
-    if (mensaje !== "") {
-        textoWhatsApp += `*Mensaje:* "${mensaje}"\n`;
+const rsvpForm = document.getElementById('rsvp-form');
+const rsvpBanner = document.getElementById('rsvp-invitacion');
+const rsvpBannerNombre = document.getElementById('rsvp-invitacion-nombre');
+const rsvpBannerPases = document.getElementById('rsvp-invitacion-pases');
+const rsvpStatus = document.getElementById('rsvp-status');
+const rsvpWa = document.getElementById('rsvp-wa');
+const rsvpHint = document.getElementById('rsvp-hint');
+const grupoPersonas = document.getElementById('grupo-personas');
+const grupoNombres = document.getElementById('grupo-nombres');
+const selectPersonas = document.getElementById('personas');
+const inputNombres = document.getElementById('nombres');
+const inputNombre = document.getElementById('nombre');
+const inputMensaje = document.getElementById('mensaje');
+const btnRsvp = rsvpForm ? rsvpForm.querySelector('.btn-rsvp') : null;
+
+let invitacionActual = null;
+let enviandoRsvp = false;
+
+function leerTokenInvitacion() {
+    const params = new URLSearchParams(window.location.search);
+    return (params.get('inv') || '').trim().toUpperCase();
+}
+
+function mostrarEstado(mensaje, tipo) {
+    if (!rsvpStatus) return;
+    rsvpStatus.textContent = mensaje || '';
+    rsvpStatus.className = 'rsvp-status' + (tipo ? ' ' + tipo : '');
+    rsvpStatus.hidden = !mensaje;
+}
+
+function whatsappNovios(texto) {
+    return 'https://wa.me/' + TELEFONO_NOVIOS + '?text=' + encodeURIComponent(texto);
+}
+
+function textoWhatsAppGenerico(nombre, asistencia, mensaje) {
+    let texto = '¡Hola! Vengo a confirmar mi asistencia a la boda. 💍\n\n';
+    texto += '*Nombre:* ' + nombre + '\n';
+    texto += '*Asistencia:* ' + asistencia + '\n';
+    if (mensaje !== '') {
+        texto += '*Mensaje:* "' + mensaje + '"\n';
+    }
+    return texto;
+}
+
+// Apps Script no envía cabeceras CORS, así que la lectura se hace con JSONP.
+function consultarInvitacion(token) {
+    return new Promise(function (resolve, reject) {
+        const callback = '__rsvp_' + Date.now() + '_' + Math.floor(Math.random() * 1000000);
+        const script = document.createElement('script');
+        const temporizador = setTimeout(function () {
+            limpiar();
+            reject(new Error('timeout'));
+        }, 25000);
+
+        function limpiar() {
+            clearTimeout(temporizador);
+            delete window[callback];
+            if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[callback] = function (datos) {
+            limpiar();
+            resolve(datos);
+        };
+
+        script.onerror = function () {
+            limpiar();
+            reject(new Error('red'));
+        };
+
+        script.src = RSVP_API
+            + '?token=' + encodeURIComponent(token)
+            + '&callback=' + encodeURIComponent(callback);
+        document.body.appendChild(script);
+    });
+}
+
+function aplicarInvitacion(datos) {
+    invitacionActual = datos;
+
+    rsvpBannerNombre.textContent = datos.familia;
+    rsvpBannerPases.textContent = datos.pases === 1 ? '1 pase' : datos.pases + ' pases';
+    rsvpBanner.hidden = false;
+
+    inputNombre.value = datos.familia;
+    inputNombre.readOnly = true;
+
+    if (rsvpHint) {
+        rsvpHint.textContent = datos.pases === 1
+            ? 'Tu invitación es para 1 persona.'
+            : 'Tu invitación es para hasta ' + datos.pases + ' personas.';
     }
 
-    // 4. Codificar el texto para que las URLs lo entiendan (espacios, saltos de línea)
-    const textoCodificado = encodeURIComponent(textoWhatsApp);
+    selectPersonas.innerHTML = '';
+    for (let i = 1; i <= datos.pases; i++) {
+        const opcion = document.createElement('option');
+        opcion.value = i;
+        opcion.textContent = i === 1 ? '1 persona' : i + ' personas';
+        selectPersonas.appendChild(opcion);
+    }
 
-    // 5. Crear el enlace y redirigir
-    const url = `https://wa.me/${telefono}?text=${textoCodificado}`;
-    window.open(url, '_blank');
+    grupoPersonas.hidden = true;
+    grupoNombres.hidden = true;
+    btnRsvp.textContent = datos.asistencia ? 'Actualizar respuesta' : 'Confirmar asistencia';
+
+    // Si ya había confirmado, se muestra su respuesta para que pueda cambiarla.
+    if (datos.asistencia === 'Sí' || datos.asistencia === 'No') {
+        document.querySelectorAll('input[name="asistencia"]').forEach(function (radio) {
+            const esSi = radio.value.indexOf('Sí') === 0;
+            if ((datos.asistencia === 'Sí' && esSi) || (datos.asistencia === 'No' && !esSi)) {
+                radio.checked = true;
+            }
+        });
+        if (datos.asistencia === 'Sí') {
+            selectPersonas.value = datos.personas || 1;
+            grupoPersonas.hidden = false;
+            grupoNombres.hidden = false;
+        } else {
+            grupoPersonas.hidden = true;
+            grupoNombres.hidden = true;
+        }
+        inputNombres.value = datos.nombres || '';
+        inputMensaje.value = datos.comentario || '';
+        mostrarEstado('Ya tenemos tu respuesta. Puedes actualizarla si algo cambia.', '');
+    } else {
+        mostrarEstado('', '');
+    }
+}
+
+function bloquearFormulario(mensaje) {
+    mostrarEstado(mensaje, 'error');
+    if (rsvpForm) {
+        rsvpForm.querySelectorAll('input, select, textarea, button').forEach(function (el) {
+            el.disabled = true;
+        });
+    }
+    if (rsvpWa) {
+        rsvpWa.href = whatsappNovios('¡Hola! Necesito ayuda con mi invitación a la boda.');
+        rsvpWa.hidden = false;
+    }
+}
+
+// Mostrar u ocultar el selector de personas según la respuesta.
+document.querySelectorAll('input[name="asistencia"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+        if (!invitacionActual) return;
+        const asiste = radio.value.indexOf('Sí') === 0;
+        grupoPersonas.hidden = !asiste;
+        grupoNombres.hidden = !asiste;
+    });
 });
+
+if (rsvpForm) {
+    rsvpForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (enviandoRsvp) return;
+
+        const nombre = inputNombre.value.trim();
+        const seleccion = document.querySelector('input[name="asistencia"]:checked');
+        const mensaje = inputMensaje.value.trim();
+
+        if (!seleccion) {
+            mostrarEstado('Elige si podrás asistir.', 'error');
+            return;
+        }
+
+        // Sin token: se mantiene el comportamiento original (WhatsApp).
+        if (!invitacionActual) {
+            window.open(whatsappNovios(textoWhatsAppGenerico(nombre, seleccion.value, mensaje)), '_blank');
+            return;
+        }
+
+        const asiste = seleccion.value.indexOf('Sí') === 0;
+        const personas = asiste ? parseInt(selectPersonas.value, 10) || 0 : 0;
+        const nombres = inputNombres.value.trim();
+
+        if (asiste && personas < 1) {
+            mostrarEstado('Elige cuántas personas asistirán.', 'error');
+            return;
+        }
+
+        enviandoRsvp = true;
+        btnRsvp.disabled = true;
+        const textoBoton = btnRsvp.textContent;
+        btnRsvp.textContent = 'Enviando…';
+        mostrarEstado('Guardando tu respuesta…', '');
+
+        try {
+            await fetch(RSVP_API, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    token: leerTokenInvitacion(),
+                    asistencia: asiste ? 'si' : 'no',
+                    personas: personas,
+                    nombres: nombres,
+                    comentario: mensaje
+                })
+            });
+
+            // El POST no se puede leer por CORS; se verifica consultando de nuevo.
+            let guardado = false;
+            for (let intento = 0; intento < 3 && !guardado; intento++) {
+                await new Promise(function (r) { setTimeout(r, 1200); });
+                try {
+                    const datos = await consultarInvitacion(leerTokenInvitacion());
+                    if (datos && datos.ok
+                        && datos.asistencia === (asiste ? 'Sí' : 'No')
+                        && Number(datos.personas) === personas) {
+                        guardado = true;
+                    }
+                } catch (err) {
+                    // Se reintenta.
+                }
+            }
+
+            if (guardado) {
+                invitacionActual.asistencia = asiste ? 'Sí' : 'No';
+                invitacionActual.personas = personas;
+                btnRsvp.textContent = 'Actualizar respuesta';
+                mostrarEstado(
+                    asiste
+                        ? '¡Gracias! Guardamos tu respuesta: ' + personas + (personas === 1 ? ' persona.' : ' personas.')
+                        : 'Gracias por avisarnos. Los extrañaremos.',
+                    'exito'
+                );
+            } else {
+                btnRsvp.textContent = textoBoton;
+                mostrarEstado('No pudimos confirmar tu respuesta. Revisa tu conexión e inténtalo otra vez.', 'error');
+            }
+        } catch (err) {
+            btnRsvp.textContent = textoBoton;
+            mostrarEstado('No pudimos confirmar tu respuesta. Revisa tu conexión e inténtalo otra vez.', 'error');
+        } finally {
+            enviandoRsvp = false;
+            btnRsvp.disabled = false;
+        }
+    });
+}
+
+// Al cargar: si el enlace trae ?inv=TOKEN, se busca la invitación.
+(function iniciarInvitacion() {
+    const token = leerTokenInvitacion();
+    if (!token) return;
+
+    if (!RSVP_API) {
+        mostrarEstado('La confirmación en línea todavía no está activa. Escríbenos por WhatsApp.', 'error');
+        if (rsvpWa) {
+            rsvpWa.href = whatsappNovios('¡Hola! Quiero confirmar mi asistencia a la boda.');
+            rsvpWa.hidden = false;
+        }
+        return;
+    }
+
+    mostrarEstado('Cargando tu invitación…', '');
+
+    consultarInvitacion(token).then(function (datos) {
+        if (datos && datos.ok) {
+            aplicarInvitacion(datos);
+        } else {
+            bloquearFormulario('No encontramos tu invitación. Revisa el enlace o escríbenos por WhatsApp.');
+        }
+    }).catch(function () {
+        mostrarEstado('No pudimos cargar tu invitación. Revisa tu conexión e inténtalo de nuevo.', 'error');
+    });
+})();
 
 
 // --- 5. LÓGICA DE LA GALERÍA (ACORDEÓN, ANIMACIÓN Y SCROLL CONTROLADO) ---
