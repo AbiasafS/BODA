@@ -1,0 +1,9 @@
+# Fotos originales de la boda (se suben a Cloudinary, no van al repo)
+2026-12-26 GESURI & PABLO (resized)/
+
+# Editor
+.vscode/
+
+# Credenciales / manifiestos generados
+scripts/manifest_*.json
+.env

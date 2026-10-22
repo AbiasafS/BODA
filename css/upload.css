@@ -153,6 +153,13 @@
     box-shadow: 0 4px 10px rgba(99, 107, 47, 0.3);
 }
 
+.btn-subir:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .estado-upload {
     text-align: center;
     padding: 2rem;
