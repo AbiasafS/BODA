@@ -3,92 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería Completa - Nuestra Boda</title>
+    <title>Nuestra Galería - Pablo &amp; Gesuri</title>
+    <link rel="preload" as="image" href="https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto,w_1600/IMG_8806_resized">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/galeria.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Contenedor centralizado -->
     <main class="mobile-container">
-        
-        <!-- SECCIÓN: Galería Completa -->
+
+        <!-- PORTADA DE LA GALERÍA -->
+        <header class="gallery-hero">
+            <a href="index.html" class="back-btn" aria-label="Volver a la página principal">
+                <span class="back-btn-arrow" aria-hidden="true">&larr;</span> Inicio
+            </a>
+
+            <div class="gallery-hero-content">
+                <p class="gallery-hero-subtitle">Pablo &amp; Gesuri</p>
+                <h1 class="gallery-hero-title">Nuestra Galería</h1>
+                <div class="gallery-hero-divider"></div>
+                <p class="gallery-hero-date">26 · 12 · 2026</p>
+            </div>
+        </header>
+
+        <!-- GALERÍA COMPLETA -->
         <section class="gallery-section">
-            <div class="container">
-                <h2 class="section-title">Nuestra Galería Completa</h2>
-                
+            <div class="gallery-container">
+
+                <p class="gallery-lead">
+                    Cada foto guarda un instante de nuestra historia.
+                    Elige un momento y pulsa sobre la imagen para ampliarla.
+                </p>
+
                 <!-- Filtros de categoría -->
-                <div class="gallery-filters">
-                    <button class="gallery-filter-btn active" data-cat="all">Todas</button>
-                    <button class="gallery-filter-btn" data-cat="pre-wedding">Pre-boda</button>
-                    <button class="gallery-filter-btn" data-cat="ceremonia">Ceremonia</button>
-                    <button class="gallery-filter-btn" data-cat="recepción">Recepción</button>
-                    <button class="gallery-filter-btn" data-cat="fiesta">Fiesta</button>
+                <div class="gallery-filters-wrap">
+                    <div class="gallery-filters" role="group" aria-label="Filtrar fotos por categoría">
+                        <button class="gallery-filter-btn active" data-cat="all" aria-pressed="true">Todas</button>
+                        <button class="gallery-filter-btn" data-cat="pre-wedding" aria-pressed="false">Pre-boda</button>
+                        <button class="gallery-filter-btn" data-cat="ceremonia" aria-pressed="false">Ceremonia</button>
+                        <button class="gallery-filter-btn" data-cat="recepción" aria-pressed="false">Recepción</button>
+                        <button class="gallery-filter-btn" data-cat="fiesta" aria-pressed="false">Fiesta</button>
+                    </div>
                 </div>
-                
-                <div class="gallery-grid" id="galleryGrid">
-                    <!-- Fotos se cargarán con JavaScript -->
-                </div>
-                
-                <div class="loading" id="loadingStatus">
-                    Cargando fotos...
-                </div>
+
+                <!-- Fotos (se generan con JavaScript) -->
+                <div class="gallery-grid" id="galleryGrid"></div>
+
+                <p class="gallery-empty" id="galleryEmpty" hidden>
+                    Todavía no hay fotos en esta categoría.
+                </p>
+
             </div>
         </section>
 
+        <!-- PIE DE PÁGINA (mismo estilo que el index) -->
+        <footer class="site-footer gallery-footer">
+            <p class="footer-names">Pablo &amp; Gesuri</p>
+            <p class="footer-date">26 . 12 . 2026</p>
+            <p class="footer-credits">Hecho con ♥ para nuestro gran día</p>
+
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Volver al Inicio</a>
+                <a href="upload.html" class="footer-link">Subir Fotos</a>
+            </div>
+        </footer>
+
     </main>
 
-    <!-- LIGHTBOX (Visor de imágenes en pantalla completa) -->
-    <div id="lightbox" class="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <img class="lightbox-img" id="lightbox-img" alt="Foto ampliada">
+    <!-- VISOR (LIGHTBOX) -->
+    <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos">
+        <span class="lightbox-counter" id="lightbox-counter"></span>
+        <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar visor">&times;</button>
+        <img class="lightbox-img" id="lightbox-img" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
 
-    <!-- Lógica de galería: lightbox, zoom y cierre al pulsar fuera de la imagen -->
     <script>
-        // Datos de todas las fotos organizadas por categoría
+        // ---------------------------------------------------------
+        // Datos: todas las fotos organizadas por categoría
+        // ---------------------------------------------------------
         const fotosPorCategoria = {
             pre_wedding: [
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8950_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9182_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9106_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9181_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9080_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8722_resized.jpg"
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8950_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9182_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9106_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9181_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9080_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8722_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091527/IMG_8665_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091527/IMG_8666_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091527/IMG_8674_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091528/IMG_8676_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091528/IMG_8677_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8678_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091527/IMG_8679_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8680_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8697_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8713_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091530/IMG_8714_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8718_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8723_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8732_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091531/IMG_8739_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091532/IMG_8750_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8755_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8765_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8772_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091532/IMG_8780.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8785_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091534/IMG_8786_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091534/IMG_8791_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091534/IMG_8793_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790011797/IMG_8806_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8815_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8820_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8822_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091536/IMG_8829_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091536/IMG_8830_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091536/IMG_8832_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8864_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8870_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8881_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8896_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8914_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8922_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8924_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091538/IMG_8935_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8936_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8938_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8942_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091539/IMG_8945_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091541/IMG_8952_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091541/IMG_8953_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091541/IMG_8959_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091542/IMG_8963_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091541/IMG_8971_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091541/IMG_8975_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091542/IMG_8979_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091543/IMG_8998_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091543/IMG_9000_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091544/IMG_9007_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091544/IMG_9009_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091543/IMG_9010_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091545/IMG_9014_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091544/IMG_9021_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9023_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091545/IMG_9035_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091545/IMG_9062_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9066_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091545/IMG_9070_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091546/IMG_9083_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091547/IMG_9090_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091547/IMG_9098_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091547/IMG_9099_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091547/IMG_9102_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9112_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9126_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9141_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091548/IMG_9145_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9157_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9164_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9165_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9168_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9176_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9177_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091550/IMG_9180_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9187_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9190_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9191_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091551/IMG_9193_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091552/IMG_9203_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091553/IMG_9205_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091553/IMG_9211_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091552/IMG_9212_resized.jpg',
             ],
             ceremonia: [
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg"
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg',
             ],
             recepcion: [
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg",
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg"
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg',
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg',
             ],
             fiesta: [
-                "https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg",
-                "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&h=600&fit=crop"
-            ]
+                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg',
+            ],
+        };
+
+        const NOMBRES_CATEGORIA = {
+            pre_wedding: 'Pre-boda',
+            ceremonia: 'Ceremonia',
+            recepcion: 'Recepción',
+            fiesta: 'Fiesta'
         };
 
         // Aplanar todas las fotos manteniendo la categoría
         const todasLasFotos = [];
         for (const [categoria, urls] of Object.entries(fotosPorCategoria)) {
             urls.forEach(src => {
-                todasLasFotos.push({ src: src, alt: `Foto de ${categoria}`, categoria: categoria });
+                todasLasFotos.push({ src, alt: `Foto de ${NOMBRES_CATEGORIA[categoria] || categoria}`, categoria });
             });
         }
 
+        // ---------------------------------------------------------
+        // Helpers de Cloudinary: miniaturas adaptadas al tamaño real
+        // ---------------------------------------------------------
+        function conTransformacion(src, transformacion) {
+            return src.replace('/image/upload/', `/image/upload/${transformacion}/`);
+        }
+
+        function srcsetDe(foto) {
+            return [400, 800, 1200]
+                .map(ancho => `${conTransformacion(foto.src, `w_${ancho},f_auto,q_auto`)} ${ancho}w`)
+                .join(', ');
+        }
+
+        // ---------------------------------------------------------
         // Elementos del DOM
+        // ---------------------------------------------------------
         const grid = document.getElementById('galleryGrid');
+        const galleryEmpty = document.getElementById('galleryEmpty');
         const filterBtns = document.querySelectorAll('.gallery-filter-btn');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+        const lightboxCaption = document.getElementById('lightbox-caption');
 
         // Estado del zoom / arrastre
         let fotosVisibles = todasLasFotos;
-        let currentIndex = 0;
         let currentScale = 1;
         let translateX = 0;
         let translateY = 0;
@@ -96,9 +240,19 @@
         let startX, startY;
         let initialDistance = null;
 
+        function limitarDesplazamiento() {
+            // Mitad del desbordamiento real de la imagen ampliada
+            const maxX = (lightboxImg.clientWidth * (currentScale - 1)) / 2;
+            const maxY = (lightboxImg.clientHeight * (currentScale - 1)) / 2;
+            translateX = Math.min(maxX, Math.max(-maxX, translateX));
+            translateY = Math.min(maxY, Math.max(-maxY, translateY));
+        }
+
         function updateTransform() {
+            if (currentScale > 1) limitarDesplazamiento();
             lightboxImg.style.transform =
                 `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+            lightboxImg.classList.toggle('zoomed', currentScale > 1);
         }
 
         function resetZoom() {
@@ -108,7 +262,9 @@
             updateTransform();
         }
 
-        // Renderizar grid de miniaturas
+        // ---------------------------------------------------------
+        // Renderizar la rejilla de miniaturas
+        // ---------------------------------------------------------
         function renderizarGaleria(fotos) {
             fotosVisibles = fotos;
             grid.innerHTML = '';
@@ -118,51 +274,80 @@
                 item.className = 'gallery-item';
 
                 const img = document.createElement('img');
-                img.src = foto.src;
+                img.src = conTransformacion(foto.src, 'w_800,f_auto,q_auto');
+                img.srcset = srcsetDe(foto);
+                img.sizes = '(max-width: 639px) 50vw, (max-width: 1199px) 33vw, 25vw';
                 img.alt = foto.alt;
                 img.loading = 'lazy';
+                img.decoding = 'async';
+                img.tabIndex = 0;
+                img.setAttribute('role', 'button');
+                img.setAttribute('aria-label', `Ampliar ${foto.alt}`);
                 img.addEventListener('click', () => openLightbox(index));
+                img.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openLightbox(index);
+                    }
+                });
+
+                const zoom = document.createElement('span');
+                zoom.className = 'gallery-zoom';
+                zoom.setAttribute('aria-hidden', 'true');
+                zoom.textContent = '+';
 
                 item.appendChild(img);
+                item.appendChild(zoom);
                 grid.appendChild(item);
             });
+
+            galleryEmpty.hidden = fotos.length !== 0;
         }
 
-        // Abrir lightbox
+        // ---------------------------------------------------------
+        // Abrir / cerrar el visor
+        // ---------------------------------------------------------
         function openLightbox(index) {
-            currentIndex = index;
             const foto = fotosVisibles[index];
             if (!foto) return;
 
-            lightboxImg.src = foto.src;
+            lightboxImg.src = conTransformacion(foto.src, 'f_auto,q_auto');
             lightboxImg.alt = foto.alt;
+            lightboxCounter.textContent = `${index + 1} / ${fotosVisibles.length}`;
+            lightboxCaption.textContent = NOMBRES_CATEGORIA[foto.categoria] || '';
+
             resetZoom();
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // Cerrar lightbox
         function closeLightbox() {
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
             resetZoom();
             lightboxImg.src = '';
         }
 
+        // ---------------------------------------------------------
         // Filtros por categoría
+        // ---------------------------------------------------------
         const mapaCategorias = {
-            'all': 'all',
+            all: 'all',
             'pre-wedding': 'pre_wedding',
-            'ceremonia': 'ceremonia',
+            ceremonia: 'ceremonia',
             'recepción': 'recepcion',
-            'recepcion': 'recepcion',
-            'fiesta': 'fiesta'
+            recepcion: 'recepcion',
+            fiesta: 'fiesta'
         };
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
+                filterBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-pressed', 'false');
+                });
                 btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
 
                 const cat = mapaCategorias[btn.dataset.cat] || btn.dataset.cat;
                 renderizarGaleria(
@@ -171,22 +356,24 @@
             });
         });
 
-        // --- CIERRE DEL LIGHTBOX ---
-        // Cerrar con la "X"
+        // ---------------------------------------------------------
+        // Cierre del visor
+        // ---------------------------------------------------------
         lightboxClose.addEventListener('click', closeLightbox);
 
-        // Cerrar al pulsar FUERA de la imagen (sobre el fondo oscuro)
+        // Cerrar al pulsar fuera de la imagen (sobre el fondo oscuro)
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
 
-        // Cerrar con la tecla Escape
+        // Cerrar con Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
         });
 
-        // --- ZOOM ---
-        // Rueda del ratón (PC)
+        // ---------------------------------------------------------
+        // Zoom con la rueda del ratón
+        // ---------------------------------------------------------
         lightboxImg.addEventListener('wheel', (e) => {
             if (!lightbox.classList.contains('active')) return;
             e.preventDefault();
@@ -227,7 +414,9 @@
             updateTransform();
         });
 
+        // ---------------------------------------------------------
         // Zoom táctil (pellizcar) y arrastre en móvil
+        // ---------------------------------------------------------
         lightboxImg.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1 && currentScale > 1) {
                 isDragging = true;
@@ -269,7 +458,9 @@
             if (initialDistance) initialDistance = null;
         });
 
+        // ---------------------------------------------------------
         // Renderizado inicial
+        // ---------------------------------------------------------
         renderizarGaleria(todasLasFotos);
     </script>
 </body>

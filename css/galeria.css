@@ -1,138 +1,497 @@
-/* --- GALERÍA CON ZOOM Y VISTA MÓVIL ELEGANTE --- */
-/* Usa variables del style.css: */
-/* --verde-oscuro: #42471F */
-/* --verde-oliva: #636B2F */
-/* --crema: #FAF9F6 */
+/* =========================================================
+   GALERÍA — estilos propios de galeria.html
+   No se toca css/style.css. La estética replica el index:
+   crema + verdes de la paleta, Playfair Display + Montserrat.
+   ========================================================= */
 
-.gallery-section {
-    padding: 4rem 1.5rem;
-    background: var(--crema);
+:root {
+    --galeria-sombra-suave: 0 6px 24px rgba(66, 71, 31, 0.08);
+    --galeria-sombra-media: 0 14px 40px rgba(66, 71, 31, 0.16);
+    --galeria-radio: 12px;
+    --galeria-borde: rgba(142, 153, 67, 0.22);
 }
 
-.gallery-section .section-title {
+/* ---------------------------------------------------------
+   HERO DE LA GALERÍA
+   --------------------------------------------------------- */
+.gallery-hero {
+    position: relative;
+    min-height: clamp(360px, 48vh, 560px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 1.5rem 2.5rem;
+    /* Si la foto no carga, queda un degradado elegante de la paleta */
+    background-color: var(--verde-oscuro);
+    background-image:
+        url('https://res.cloudinary.com/otehk3l8/image/upload/f_auto,q_auto,w_1600/IMG_8806_resized'),
+        linear-gradient(160deg, var(--verde-oscuro) 0%, var(--verde-medio) 55%, var(--verde-pistacho) 100%);
+    background-size: cover, cover;
+    background-position: center 25%, center;
+    background-repeat: no-repeat, no-repeat;
+    overflow: hidden;
+}
+
+/* Degradado hacia crema, igual que el hero del index */
+.gallery-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        var(--crema) 9%,
+        rgba(250, 249, 246, 0.86) 28%,
+        rgba(250, 249, 246, 0.28) 55%,
+        rgba(66, 71, 31, 0.16) 100%
+    );
+    pointer-events: none;
+}
+
+.gallery-hero-content {
+    position: relative;
+    z-index: 2;
     text-align: center;
-    margin-bottom: 2rem;
-    color: var(--verde-oscuro);
+    max-width: 46rem;
 }
 
-/* Filtros de categoría */
+.gallery-hero-subtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--verde-oscuro);
+    margin-bottom: 0.9rem;
+}
+
+.gallery-hero-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 8vw, 4rem);
+    line-height: 1.05;
+    color: var(--verde-oscuro);
+    text-shadow: 0 1px 24px rgba(250, 249, 246, 0.55);
+}
+
+.gallery-hero-divider {
+    width: 54px;
+    height: 1px;
+    background-color: var(--verde-oscuro);
+    margin: 1.4rem auto 1rem;
+    opacity: 0.7;
+}
+
+.gallery-hero-date {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--verde-oscuro);
+    opacity: 0.85;
+}
+
+/* Botón de volver a la página principal */
+.back-btn {
+    position: absolute;
+    top: 1.15rem;
+    left: 1.15rem;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.62rem 1.15rem;
+    background: rgba(250, 249, 246, 0.9);
+    color: var(--verde-oscuro);
+    border: 1px solid rgba(66, 71, 31, 0.12);
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+    background: var(--verde-oscuro);
+    color: var(--crema);
+    transform: translateY(-2px);
+}
+
+.back-btn-arrow {
+    font-size: 1rem;
+    line-height: 1;
+    transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------------
+   SECCIÓN / CONTENEDOR
+   --------------------------------------------------------- */
+.gallery-section {
+    padding: 2.25rem 1.25rem 4.5rem;
+    background-color: var(--crema);
+}
+
+.gallery-container {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* style.css declara overflow-x:hidden en .mobile-container, lo que crea un
+   contenedor de scroll y rompe position:sticky. Con clip no ocurre. */
+.mobile-container {
+    overflow-x: clip;
+}
+
+.gallery-lead {
+    max-width: 34rem;
+    margin: 0 auto 2.25rem;
+    text-align: center;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--verde-oliva);
+}
+
+/* ---------------------------------------------------------
+   FILTROS
+   --------------------------------------------------------- */
+.gallery-filters-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    margin: 0 -1.25rem 1.75rem;
+    padding: 0.9rem 1.25rem;
+    background: rgba(250, 249, 246, 0.92);
+    border-bottom: 1px solid var(--galeria-borde);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
 .gallery-filters {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
 }
 
 .gallery-filter-btn {
-    background: none;
-    border: 1px solid var(--verde-oliva);
+    padding: 0.55rem 1.1rem;
+    background: #fff;
+    border: 1px solid rgba(99, 107, 47, 0.35);
+    border-radius: 50px;
     color: var(--verde-oscuro);
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    font-family: inherit;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: background-color 0.25s ease, color 0.25s ease,
+                border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.gallery-filter-btn:hover:not(.active) {
+    border-color: var(--verde-oliva);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 107, 47, 0.16);
 }
 
 .gallery-filter-btn.active {
     background-color: var(--verde-oliva);
+    border-color: var(--verde-oliva);
     color: var(--crema);
+    box-shadow: 0 8px 20px rgba(99, 107, 47, 0.32);
 }
 
-.gallery-filter-btn:hover:not(.active) {
-    background-color: var(--verde-oliva);
-    color: var(--crema);
-}
-
-/* Grid de fotos - 2 columnas en móvil, se adapta */
+/* ---------------------------------------------------------
+   GRID TIPO MASONRY (respeta el alto natural de cada foto)
+   --------------------------------------------------------- */
 .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 8px;
-    padding: 4px;
+    display: block; /* anula el grid de style.css */
+    columns: 2;
+    column-gap: 0.75rem;
+    padding-bottom: 1rem;
 }
 
-/* Items de foto - con aspecto de cuadro elegante */
 .gallery-item {
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--verde-medio);
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
     position: relative;
+    margin: 0 0 0.75rem;
+    border-radius: var(--galeria-radio);
+    overflow: hidden;
+    background-color: rgba(142, 153, 67, 0.12);
+    box-shadow: var(--galeria-sombra-suave);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
 }
 
-/* Efecto al pasar el ratón */
+.gallery-item:hover {
+    box-shadow: var(--galeria-sombra-media);
+    transform: translateY(-3px);
+}
+
 .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     display: block;
-    transition: transform 0.2s ease;
+    width: 100%;
+    height: auto;
+    cursor: zoom-in;
+    transition: transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gallery-item img:focus-visible {
+    outline: 2px solid var(--verde-oliva);
+    outline-offset: -3px;
 }
 
 .gallery-item:hover img {
     transform: scale(1.05);
 }
 
-/* Lightbox - modal para zoom */
+/* Velo y símbolo de ampliar al pasar el ratón */
+.gallery-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(66, 71, 31, 0.5), transparent 55%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.gallery-item:hover::after,
+.gallery-item:focus-within::after {
+    opacity: 1;
+}
+
+.gallery-zoom {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid rgba(250, 249, 246, 0.55);
+    background: rgba(66, 71, 31, 0.35);
+    color: var(--crema);
+    font-size: 0.95rem;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-zoom,
+.gallery-item:focus-within .gallery-zoom {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-empty {
+    padding: 4rem 1rem;
+    text-align: center;
+    color: var(--verde-oliva);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+/* ---------------------------------------------------------
+   LIGHTBOX
+   --------------------------------------------------------- */
 .lightbox {
-    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    justify-content: center;
-    align-items: center;
+    inset: 0;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(22, 24, 12, 0.94);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .lightbox.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.lightbox-img {
+    max-width: min(94vw, 1280px);
+    max-height: 84vh;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    cursor: zoom-in;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: transform 0.18s ease-out;
+}
+
+.lightbox-img.zoomed {
+    cursor: grab;
+}
+
+.lightbox-img.zoomed:active {
+    cursor: grabbing;
 }
 
 .lightbox-close {
     position: absolute;
-    top: 20px;
-    right: 30px;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.lightbox-img {
-    max-width: 90%;
-    max-height: 80%;
-    object-fit: contain;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    transition: transform 0.2s;
-}
-
-.lightbox-img.zoomed {
-    transform: scale(1.2);
-}
-
-/* Navegación del lightbox */
-.gallery-nav {
-    position: absolute;
-    top: 50%;
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    margin-top: -20px;
-    cursor: pointer;
+    top: 1rem;
+    right: 1rem;
     z-index: 1002;
-    transition: background 0.3s;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(250, 249, 246, 0.35);
+    background: rgba(250, 249, 246, 0.12);
+    color: var(--crema);
+    padding: 0;
+    font-family: inherit;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.gallery-nav:hover {
-    background: rgba(255,255,255,0.4);
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+    background: var(--verde-oliva);
+    transform: rotate(90deg);
 }
 
-.gallery-nav-prev { left: 10px; }
-.gallery-nav-next { right: 10px; }
+.lightbox-counter {
+    position: absolute;
+    top: 1.9rem;
+    left: 1.5rem;
+    z-index: 1002;
+    color: rgba(250, 249, 246, 0.8);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.lightbox-caption {
+    position: absolute;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1002;
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    background: rgba(250, 249, 246, 0.1);
+    border: 1px solid rgba(250, 249, 246, 0.18);
+    color: rgba(250, 249, 246, 0.9);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* ---------------------------------------------------------
+   PIE: el .site-footer del index se reutiliza tal cual.
+   Solo se separa el bloque de enlaces.
+   --------------------------------------------------------- */
+.gallery-footer .footer-links {
+    flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+@media (min-width: 640px) {
+    .gallery-grid {
+        columns: 3;
+        column-gap: 1rem;
+    }
+
+    .gallery-item {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .gallery-hero {
+        min-height: clamp(420px, 55vh, 680px);
+        padding-bottom: 3.25rem;
+    }
+
+    .back-btn {
+        top: 1.75rem;
+        left: 2rem;
+    }
+
+    .gallery-section {
+        padding: 3.5rem 2.5rem 6rem;
+    }
+
+    .gallery-filters-wrap {
+        margin: 0 -2.5rem 2.25rem;
+        padding: 1rem 2.5rem;
+    }
+
+    .gallery-filter-btn {
+        font-size: 0.74rem;
+        padding: 0.6rem 1.35rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .gallery-grid {
+        columns: 4;
+        column-gap: 1.25rem;
+    }
+
+    .gallery-item {
+        margin-bottom: 1.25rem;
+    }
+
+    .lightbox-close {
+        top: 1.75rem;
+        right: 1.75rem;
+    }
+
+    .lightbox-counter {
+        top: 2.65rem;
+        left: 2.5rem;
+    }
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .gallery-item,
+    .gallery-item img,
+    .gallery-item::after,
+    .gallery-zoom,
+    .back-btn,
+    .lightbox,
+    .lightbox-img,
+    .lightbox-close {
+        transition: none;
+    }
+
+    .gallery-item:hover {
+        transform: none;
+    }
+
+    .gallery-item:hover img {
+        transform: none;
+    }
+}
