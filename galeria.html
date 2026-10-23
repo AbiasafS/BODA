@@ -35,14 +35,11 @@
                     Elige un momento y pulsa sobre la imagen para ampliarla.
                 </p>
 
-                <!-- Filtros de categoría -->
+                <!-- Filtros de categoría (por ahora solo pre-boda) -->
                 <div class="gallery-filters-wrap">
                     <div class="gallery-filters" role="group" aria-label="Filtrar fotos por categoría">
                         <button class="gallery-filter-btn active" data-cat="all" aria-pressed="true">Todas</button>
                         <button class="gallery-filter-btn" data-cat="pre-wedding" aria-pressed="false">Pre-boda</button>
-                        <button class="gallery-filter-btn" data-cat="ceremonia" aria-pressed="false">Ceremonia</button>
-                        <button class="gallery-filter-btn" data-cat="recepción" aria-pressed="false">Recepción</button>
-                        <button class="gallery-filter-btn" data-cat="fiesta" aria-pressed="false">Fiesta</button>
                     </div>
                 </div>
 
@@ -80,7 +77,9 @@
 
     <script>
         // ---------------------------------------------------------
-        // Datos: todas las fotos organizadas por categoría
+        // Datos: por ahora solo hay fotos de la pre-boda.
+        // Las categorías ceremonia, recepción y fiesta se agregarán
+        // después de la boda.
         // ---------------------------------------------------------
         const fotosPorCategoria = {
             pre_wedding: [
@@ -177,25 +176,10 @@
                 'https://res.cloudinary.com/otehk3l8/image/upload/v1790091553/IMG_9211_resized.jpg',
                 'https://res.cloudinary.com/otehk3l8/image/upload/v1790091552/IMG_9212_resized.jpg',
             ],
-            ceremonia: [
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8683_resized.jpg',
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091537/IMG_8893_resized.jpg',
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091533/IMG_8781_resized.jpg',
-            ],
-            recepcion: [
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091535/IMG_8813_resized.jpg',
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091549/IMG_9162_resized.jpg',
-            ],
-            fiesta: [
-                'https://res.cloudinary.com/otehk3l8/image/upload/v1790091529/IMG_8694_resized.jpg',
-            ],
         };
 
         const NOMBRES_CATEGORIA = {
-            pre_wedding: 'Pre-boda',
-            ceremonia: 'Ceremonia',
-            recepcion: 'Recepción',
-            fiesta: 'Fiesta'
+            pre_wedding: 'Pre-boda'
         };
 
         // Aplanar todas las fotos manteniendo la categoría
@@ -333,11 +317,7 @@
         // ---------------------------------------------------------
         const mapaCategorias = {
             all: 'all',
-            'pre-wedding': 'pre_wedding',
-            ceremonia: 'ceremonia',
-            'recepción': 'recepcion',
-            recepcion: 'recepcion',
-            fiesta: 'fiesta'
+            'pre-wedding': 'pre_wedding'
         };
 
         filterBtns.forEach(btn => {
