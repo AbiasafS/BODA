@@ -35,11 +35,14 @@
                     Elige un momento y pulsa sobre la imagen para ampliarla.
                 </p>
 
-                <!-- Filtros de categoría (por ahora solo pre-boda) -->
+                <!-- Filtros de categoría -->
                 <div class="gallery-filters-wrap">
                     <div class="gallery-filters" role="group" aria-label="Filtrar fotos por categoría">
                         <button class="gallery-filter-btn active" data-cat="all" aria-pressed="true">Todas</button>
                         <button class="gallery-filter-btn" data-cat="pre-wedding" aria-pressed="false">Pre-boda</button>
+                        <button class="gallery-filter-btn" data-cat="ceremonia" aria-pressed="false">Ceremonia</button>
+                        <button class="gallery-filter-btn" data-cat="recepción" aria-pressed="false">Recepción</button>
+                        <button class="gallery-filter-btn" data-cat="fiesta" aria-pressed="false">Fiesta</button>
                     </div>
                 </div>
 
@@ -78,8 +81,8 @@
     <script>
         // ---------------------------------------------------------
         // Datos: por ahora solo hay fotos de la pre-boda.
-        // Las categorías ceremonia, recepción y fiesta se agregarán
-        // después de la boda.
+        // Las categorías ceremonia, recepción y fiesta quedan vacías
+        // hasta después de la boda.
         // ---------------------------------------------------------
         const fotosPorCategoria = {
             pre_wedding: [
@@ -176,10 +179,16 @@
                 'https://res.cloudinary.com/otehk3l8/image/upload/v1790091553/IMG_9211_resized.jpg',
                 'https://res.cloudinary.com/otehk3l8/image/upload/v1790091552/IMG_9212_resized.jpg',
             ],
+            ceremonia: [],
+            recepcion: [],
+            fiesta: [],
         };
 
         const NOMBRES_CATEGORIA = {
-            pre_wedding: 'Pre-boda'
+            pre_wedding: 'Pre-boda',
+            ceremonia: 'Ceremonia',
+            recepcion: 'Recepción',
+            fiesta: 'Fiesta'
         };
 
         // Aplanar todas las fotos manteniendo la categoría
@@ -317,7 +326,11 @@
         // ---------------------------------------------------------
         const mapaCategorias = {
             all: 'all',
-            'pre-wedding': 'pre_wedding'
+            'pre-wedding': 'pre_wedding',
+            ceremonia: 'ceremonia',
+            'recepción': 'recepcion',
+            recepcion: 'recepcion',
+            fiesta: 'fiesta'
         };
 
         filterBtns.forEach(btn => {
