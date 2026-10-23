@@ -50,6 +50,29 @@ En la hoja: menú **Boda → Generar tokens y enlaces**.
 
 La columna **Enlace** queda lista y la columna **Mensaje** trae el texto completo para copiar y pegar en WhatsApp. Los tokens que ya existen no se cambian.
 
+## Actualizar la lista (cambios de nombres o pases)
+
+Cuando cambie el Excel:
+
+1. Corre el actualizador, que **conserva los tokens** de las invitaciones que ya existían:
+
+   ```bash
+   cd ~/Documentos/boda
+   python3 scripts/actualizar_invitaciones.py --xlsx "/ruta/Lista actualizada.xlsx"
+   ```
+
+   Deja el CSV anterior en `scripts/invitados.antes.csv` (respaldo local, no se sube).
+
+2. En la hoja, renombra la pestaña `Invitados` a `Invitados_viejo` (respaldo).
+3. **Archivo → Importar → Subir** y elige `scripts/invitados.csv`; en "Importar ubicación" elige **Insertar nueva hoja**.
+4. Renombra la pestaña nueva a **Invitados** (exacto).
+5. Menú **Boda → Generar tokens y enlaces** y luego **Crear/actualizar resumen**.
+6. Revisa las filas nuevas y los pases; borra `PRUEBA01` cuando termines las pruebas.
+
+Los invitados que no cambiaron conservan su token y su enlace. Las invitaciones nuevas reciben token nuevo; las que quitas dejan de funcionar.
+
+**Si ya hay teléfonos o confirmaciones reales**, no reemplaces la pestaña: copia las columnas D y G–K de `Invitados_viejo` a la nueva o pásamelas y lo hacemos sin perder nada.
+
 ## 6. Probar
 
 1. Abre `http://127.0.0.1:5500/?inv=PRUEBA01`.
